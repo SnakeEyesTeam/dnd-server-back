@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Validator;
+
+use Laravel\Sanctum\HasApiTokens;
+
 
 class UserControler extends Controller
 {
+
     public function store(Request $request)
     {
-        // // dd($request);
-        $input = $request->all();
         $rules = [
             'name' => 'required|unique:users',
             'email' => 'required|email|unique:users',
@@ -24,7 +27,7 @@ class UserControler extends Controller
                 'confirmed',
             ]
         ];
-        $validator = Validator::make($input, $rules, $messages = [
+        $validator = Validator::make($request->all(), $rules, $messages = [
             'required' => ':attribute обязательное поля',
             'unique' => ':attribute данное поле занято',
             'email' => ':attribute поле должен содержать существующую почту',
@@ -44,7 +47,9 @@ class UserControler extends Controller
             'id_role' => 1,
         ]);
 
-        return response()->$user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken($request->name)->plainTextToken;
+
+        return response()->json(['token' => $token]);
     }
 
     public function auth(Request $request)
