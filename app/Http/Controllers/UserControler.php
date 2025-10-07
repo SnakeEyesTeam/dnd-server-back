@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Str;
 use Validator;
 
 use Laravel\Sanctum\HasApiTokens;
@@ -52,11 +55,35 @@ class UserControler extends Controller
         return response()->json(['token' => $token]);
     }
 
+    public function logout()
+    {
+        Auth::user()->currentToken()->delete();
+
+        return response()->json('complited');
+    }
+
     public function auth(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
+
         if (Hash::check($request->password, $user->password))
             return response()->json($user->createToken('token')->plainTextToken);
     }
+
+    public function update_file(Request $request, $id)
+    {
+        if ($request->hasFile('ava')) {
+            $user = User::FindOrFail($id);
+
+            $imageName = Str::random(32) . "." . $request->ava->getClientOriginalExtension();
+            $user->update(['ava' => $imageName]);
+
+            Storage::disk('public')->put($imageName, file_get_contents($request->ava));
+
+            return response()->json($user);
+        }
+        return response()->json('uncomplited');
+    }
 }
+пш
