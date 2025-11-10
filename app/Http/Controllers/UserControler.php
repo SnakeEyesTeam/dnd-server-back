@@ -55,11 +55,17 @@ class UserControler extends Controller
         return response()->json(['token' => $token]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::user()->currentToken()->delete();
+        $user = $request->user();
 
-        return response()->json('complited');
+
+
+        if ($user && $request->user()->currentAccessToken()) {
+            $request->user()->currentAccessToken()->delete();
+        }
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     public function auth(Request $request)
@@ -67,8 +73,13 @@ class UserControler extends Controller
         $user = User::where('email', $request->email)->first();
 
 
-        if (Hash::check($request->password, $user->password))
-            return response()->json($user->createToken('token')->plainTextToken);
+
+        if (Hash::check($request->password, $user->password)) {
+            $token = $user->createToken('token')->plainTextToken;
+            Auth::login($user);
+            return response()->json($token);
+        }
+
     }
 
     public function update_file(Request $request, $id)
@@ -85,5 +96,20 @@ class UserControler extends Controller
         }
         return response()->json('uncomplited');
     }
+
+    public function ban(Request $request, $id)
+    {
+        $user = User::find($id);
+        if ($user && $user->ban === 0) {
+            $user->ban = true;
+            $user->save();
+            return response()->json('ban success');
+        } elseif ($user && $user->ban === 1) {
+            $user->ban = false;
+            $user->save();
+            return response()->json('Unbundle');
+        } else {
+            return response()->json('User not found');
+        }
+    }
 }
-пш
