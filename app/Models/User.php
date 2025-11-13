@@ -23,7 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'id_role',
-        'ban',
+        'is_baned',
     ];
 
     /**
@@ -47,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function bans()
+    {
+        return $this->hasMany(Ban::class, 'Uid', 'id');
     }
 }

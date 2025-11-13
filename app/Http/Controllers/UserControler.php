@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ban;
+use App\Models\Role;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -100,13 +102,28 @@ class UserControler extends Controller
     public function ban(Request $request, $id)
     {
         $user = User::find($id);
-        if ($user && $user->ban === 0) {
-            $user->ban = true;
+
+        if ($user && $user->is_baned === 0) {
+            Ban::create([
+                'Uid' => $user->id,
+                'Desc' => $request->input('desc', 'Блокировка по решению администратора'),
+                'Aid' => Auth::user()->id,
+                'ban_time' => now(),
+                'unban_time' => $request->unban,
+            ]);
+
+            $user->is_baned = true;
+            $Bid = Ban::where("Uid", $user->id)->value("id");
+            $user->Bid = $Bid;
+
             $user->save();
             return response()->json('ban success');
-        } elseif ($user && $user->ban === 1) {
-            $user->ban = false;
+        } elseif ($user && $user->is_baned === 1) {
+            $user->is_baned = false;
+            $user->Bid = null;
             $user->save();
+            Ban::where('Uid', $user->id)->delete();
+
             return response()->json('Unbundle');
         } else {
             return response()->json('User not found');

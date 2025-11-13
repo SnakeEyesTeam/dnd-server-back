@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use HasFactory;
 
-class Role extends Model
+class ban extends Model
 {
-    protected $table = 'roles';
-
+    //
     protected $fillable = [
-        'name'
+        'Aid',
+        'Uid',
+        'Desc',
+        'unban_time',
+        'created_at'
     ];
 
     public $timestamps = false;

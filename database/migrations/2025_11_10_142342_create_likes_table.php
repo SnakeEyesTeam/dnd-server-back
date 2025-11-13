@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        //
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); 
+            $table->bigInteger('count');
         });
     }
 
@@ -22,7 +21,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('likes');
     }
 };

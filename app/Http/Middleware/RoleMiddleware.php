@@ -17,11 +17,11 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$role): Response
     {
-        $roleid = Auth::user()->id_role;
+        $roleid = Auth::user()->Rid;
         $rolename = Role::find($roleid)->name;
         if (Auth::check() && in_array($rolename, $role)) {
             return $next($request);
         }
-        return response()->json('403');
+        return response()->json('You not role',403);
     }
 }

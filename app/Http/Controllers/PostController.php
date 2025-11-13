@@ -12,6 +12,7 @@ class PostController extends Controller
     //
     public function makePost(Request $request)
     {
+        $user = $request->user();
         $rules = [
             'title' => 'required|unique:posts',
             'description' => 'required',
@@ -27,17 +28,18 @@ class PostController extends Controller
             ], 422);
         }
 
-        $user = $request->user();
+
 
         $Post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
-            'Uid'=>$user->id,
-            'Did'=>$request->Did,
+            'Uid' => $user->id,
+            'Did' => $request->Did,
         ]);
     }
-    public function index(){
-        $posts = Post::get();
+    public function index(Request $request)
+    {
+        $posts = Post::where("Did", $request->Did)->get();
 
         dd($posts);
     }
