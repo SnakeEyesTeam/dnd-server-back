@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::create('bans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Uid');
+            $table->unsignedBigInteger('user_id');
             $table->string('Desc');
-            $table->unsignedBigInteger('Aid');
+            $table->unsignedBigInteger('admin_id');
             $table->timestamp('ban_time')->useCurrent();
             $table->timestamp('unban_time')->nullable();
 
-            $table->foreign('Aid')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('Uid')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

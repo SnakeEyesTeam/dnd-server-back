@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'id_role',
+        'role_id',
         'is_baned',
     ];
 

@@ -19,7 +19,7 @@ class Authenticate
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->is_baned == 1) {
-            $Bid = Auth::user()->Bid;
+            $Bid = Auth::user()->ban_id;
             $bans = Ban::where("id", $Bid)->get();
             $admiN = User::where("id", $bans->value("Aid"))->value("name");
             $reasan = $bans->value("Desc");

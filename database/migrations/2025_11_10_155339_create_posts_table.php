@@ -15,16 +15,16 @@ return new class extends Migration {
             $table->string("title", 52);
             $table->string("description", 255);
             $table->string("tags")->nullable();
-            $table->unsignedBigInteger('Uid');
-            $table->unsignedBigInteger('Did');
-            $table->unsignedBigInteger('Lid')->nullable();
-            $table->unsignedBigInteger('Vid')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('deportament_id');
+            $table->unsignedBigInteger('like_id')->nullable();
+            $table->unsignedBigInteger('view_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('Did')->references('id')->on('deportaments')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('Uid')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('Lid')->references('id')->on('likes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('Vid')->references('id')->on('views')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('deportament_id')->references('id')->on('deportaments')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('like_id')->references('id')->on('likes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('view_id')->references('id')->on('views')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

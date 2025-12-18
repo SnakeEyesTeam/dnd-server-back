@@ -16,12 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             '/*',
-
         ]);
-    })
-    ->withSchedule(function (Schedule $schedule) {
-        $schedule->command('app:unban')
-            ->everyMinute();
     })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([

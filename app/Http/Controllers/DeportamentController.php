@@ -9,6 +9,9 @@ use Validator;
 class DeportamentController extends Controller
 {
     //
+    public function index(){
+        return response()->json(["Deportament"=>deportament::all()]);
+    }
     public function makeDep(Request $request)
     {
         $rules = [

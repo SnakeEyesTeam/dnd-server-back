@@ -33,14 +33,19 @@ class PostController extends Controller
         $Post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
-            'Uid' => $user->id,
-            'Did' => $request->Did,
+            'user_id' => $user->id,
+            'deportament_id' => $request->Did,
         ]);
     }
     public function index(Request $request)
     {
-        $posts = Post::where("Did", $request->Did)->get();
+        $posts = Post::where("id", $request->id)->get();
 
-        dd($posts);
+        return response()->json(["Post" => $posts]);
+    }
+
+    public function destroy(string $id)
+    {
+        Post::destroy($id);
     }
 }

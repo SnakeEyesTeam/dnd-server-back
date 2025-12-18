@@ -17,7 +17,7 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$role): Response
     {
-        $roleid = Auth::user()->Rid;
+        $roleid = Auth::user()->role_id;
         $rolename = Role::find($roleid)->name;
         if (Auth::check() && in_array($rolename, $role)) {
             return $next($request);

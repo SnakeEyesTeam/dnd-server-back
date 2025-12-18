@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ban;
-use App\Models\Role;
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Str;
 use Validator;
@@ -49,13 +46,14 @@ class UserControler extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'id_role' => 1,
+            'role_id' => 1,
         ]);
 
         $token = $user->createToken($request->name)->plainTextToken;
 
         return response()->json(['token' => $token]);
     }
+
 
     public function logout(Request $request)
     {
@@ -84,20 +82,40 @@ class UserControler extends Controller
 
     }
 
-    public function update_file(Request $request, $id)
+    public function update_user(Request $request, $id)
     {
+        $user = User::FindOrFail($id);
         if ($request->hasFile('ava')) {
-            $user = User::FindOrFail($id);
-
             $imageName = Str::random(32) . "." . $request->ava->getClientOriginalExtension();
             $user->update(['ava' => $imageName]);
 
             Storage::disk('public')->put($imageName, file_get_contents($request->ava));
 
             return response()->json($user);
+        } else {
+            return response()->json('uncomplited');
         }
-        return response()->json('uncomplited');
     }
+
+    public function change_password(Request $request)
+    {
+        $rules = [
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[A-Za-z])(?=.*\d).+$/',
+                'confirmed',
+            ]
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages = [
+            'password' => 'Пароль должен содержать минимум 8 символов, а так же иметь 1 букву и 1 цифру'
+        ]);
+
+        $userId = Auth::user()->id;
+        User::where('id', $userId)->update(['password' => Hash::make($request->password)]);
+    }
+
+
 
     public function ban(Request $request, $id)
     {
@@ -105,24 +123,24 @@ class UserControler extends Controller
 
         if ($user && $user->is_baned === 0) {
             Ban::create([
-                'Uid' => $user->id,
+                'user_id' => $user->id,
                 'Desc' => $request->input('desc', 'Блокировка по решению администратора'),
-                'Aid' => Auth::user()->id,
+                'admin_id' => Auth::user()->id,
                 'ban_time' => now(),
                 'unban_time' => $request->unban,
             ]);
 
             $user->is_baned = true;
-            $Bid = Ban::where("Uid", $user->id)->value("id");
-            $user->Bid = $Bid;
+            $ban_id = Ban::where("user_id", $user->id)->value("id");
+            $user->ban_id = $ban_id;
 
             $user->save();
             return response()->json('ban success');
         } elseif ($user && $user->is_baned === 1) {
             $user->is_baned = false;
-            $user->Bid = null;
+            $user->ban_id = null;
             $user->save();
-            Ban::where('Uid', $user->id)->delete();
+            Ban::where('user_id', $user->id)->delete();
 
             return response()->json('Unbundle');
         } else {

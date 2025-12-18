@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ban extends Model
+class Entity extends Model
 {
     //
     protected $fillable = [
-        'admin_id',
-        'user_id',
-        'Desc',
-        'unban_time',
-        'created_at'
+        'name',
+        'path',
+        'iniciative',
+        'discription',
+        'size'
     ];
 
     public $timestamps = false;

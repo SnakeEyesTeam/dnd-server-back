@@ -27,9 +27,10 @@ class Unban extends Command
      */
     public function handle()
     {
+        \Log::info('Запуск команды Unban: ' . now());
         $nowTime = now();
 
-        $UserBans = Ban::where('unban_time', '>=', $nowTime)->get();
+        $UserBans = Ban::where('unban_time', '<=', $nowTime)->get();
 
         foreach ($UserBans as $ban) {
 

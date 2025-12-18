@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class post extends Model
+class maps extends Model
 {
     //
+    public $timestamps = false;
+
     protected $fillable = [
-        'title',
-        'description',
-        'user_id',
-        'deportament_id'
+        'id',
+        'name',
+        'path',
     ];
 }
