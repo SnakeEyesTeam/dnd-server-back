@@ -21,18 +21,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('is_banned')->group(function () {
         Route::resource('/maps', MapController::class);
 
-        Route::post('/change-password', [UserControler::class, 'change_password']);
+        Route::post('/profile/change-password', [ProfileController::class, 'change_password']);
+        Route::post('/profile/reset-password', [ProfileController::class, 'sendResetLink']);
         Route::get('/profile/{id}/info', [ProfileController::class, 'info']);
         Route::get('/profile/{id}/post', [ProfileController::class, 'post']);
-        
+
         Route::post('/forum/create/post', [PostController::class, 'makePost']);
         Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
-        
+
         Route::post('/update/{id}', [UserControler::class, 'update_user']);
+        Route::post('/template', function () {
+            return 'template'; })->name('template');
     });
 });
 
-Route::get('forum/deportaments', [DepartamentController::class, 'index']);
+Route::get('/users', [UserControler::class, "getUser"]);
+
+Route::get('forum/departaments', [DepartamentController::class, 'index']);
 Route::get('forum/{id}/post', [PostController::class, 'index']);
 
 Route::post('/registration', [UserControler::class, 'store']);

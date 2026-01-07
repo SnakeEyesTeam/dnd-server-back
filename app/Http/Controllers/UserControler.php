@@ -75,5 +75,22 @@ class UserControler extends Controller
 
     }
 
+    public function getUser(Request $request){
+        $search = $request->input('search', null);
+        $skip = (int) $request->input('skip', 0);
+        $take = (int) $request->input('take', 10);
+        
+        $usersQuery = User::query();
 
+        if ($search) {
+            $usersQuery->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
+            });
+        }
+
+        $users = $usersQuery->skip($skip)->take($take)->get();
+
+        return response()->json($users);
+    }
 }
