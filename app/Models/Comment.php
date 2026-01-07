@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Comment extends Model
 {
+    //
     protected $fillable = [
-        'title',
+        'id',
         'content',
-        'user_id',
-        'tags',
-        'departament_id'
+        'files',
+        'post_id'
     ];
-
+    public $timestamps = false;
 }

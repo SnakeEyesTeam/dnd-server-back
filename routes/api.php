@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
+use App\Http\Controllers\ComentController;
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -21,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('is_banned')->group(function () {
         Route::resource('/maps', MapController::class);
 
+        Route::resource('/forum/comment', ComentController::class);
+
         Route::post('/profile/change-password', [ProfileController::class, 'change_password']);
         Route::post('/profile/reset-password', [ProfileController::class, 'sendResetLink']);
         Route::get('/profile/{id}/info', [ProfileController::class, 'info']);
@@ -31,14 +34,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/update/{id}', [UserControler::class, 'update_user']);
         Route::post('/template', function () {
-            return 'template'; })->name('template');
+            return 'template';
+        })->name('template');
     });
 });
 
 Route::get('/users', [UserControler::class, "getUser"]);
+Route::get('/forum/deparmnent/{id}', [DepartamentController::class, "getDepartament"]);
 
-Route::get('forum/departaments', [DepartamentController::class, 'index']);
-Route::get('forum/{id}/post', [PostController::class, 'index']);
+Route::get('/forum/departaments', [DepartamentController::class, 'index']);
+Route::get('/forum/{id}/post', [PostController::class, 'index']);
 
 Route::post('/registration', [UserControler::class, 'store']);
 Route::post('/auth', [UserControler::class, 'auth']);
