@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\deportament;
+use App\Models\Departament;
 use Illuminate\Http\Request;
 use Validator;
 
-class DeportamentController extends Controller
+class DepartamentController extends Controller
 {
     //
     public function index(){
-        return response()->json(["Deportament"=>deportament::all()]);
+        return response()->json(["Departament"=>Departament::all()]);
     }
     public function makeDep(Request $request)
     {
         $rules = [
-            'name' => 'required|unique:deportaments',
+            'name' => 'required|unique:Departaments',
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
             'required' => ':attribute обязательное поля',
@@ -29,7 +29,7 @@ class DeportamentController extends Controller
         }
 
 
-        Deportament::create([
+        Departament::create([
             "name"=>$request->name
         ]);
     }

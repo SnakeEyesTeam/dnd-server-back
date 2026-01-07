@@ -15,7 +15,7 @@ class PostController extends Controller
         $user = $request->user();
         $rules = [
             'title' => 'required|unique:posts',
-            'description' => 'required',
+            'contents' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
             'required' => ':attribute обязательное поля',
@@ -32,9 +32,9 @@ class PostController extends Controller
 
         $Post = Post::create([
             'title' => $request->title,
-            'description' => $request->description,
+            'content' => $request->contents,
             'user_id' => $user->id,
-            'deportament_id' => $request->Did,
+            'departament_id' => $request->Did,
         ]);
     }
     public function index(Request $request)

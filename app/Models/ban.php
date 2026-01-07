@@ -10,7 +10,7 @@ class ban extends Model
     protected $fillable = [
         'admin_id',
         'user_id',
-        'Desc',
+        'content',
         'unban_time',
         'created_at'
     ];

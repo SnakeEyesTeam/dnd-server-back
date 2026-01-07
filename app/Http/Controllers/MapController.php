@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\maps;
+use App\Models\Map;
 use Illuminate\Http\Request;
 
-class MapsController extends Controller
+class MapController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +29,7 @@ class MapsController extends Controller
     public function store(Request $request)
     {
         //
-        maps::create([
+        map::create([
             'name' => $request->name,
             'path' => $request->path,
         ]);

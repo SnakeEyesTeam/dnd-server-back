@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'statusU' => \App\Http\Middleware\Authenticate::class,
+            'is_banned' => \App\Http\Middleware\Authenticate::class,
             'role' => \App\Http\Middleware\RoleMiddleware::class
         ]);
 
