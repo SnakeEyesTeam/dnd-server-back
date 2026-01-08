@@ -27,13 +27,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/{id}/info', [ProfileController::class, 'info']);
         Route::get('/profile/{id}/post', [ProfileController::class, 'post']);
         Route::get('/profile/{id}/characters', [CharactersController::class, 'getCharacter']);
-        Route::post('/profile/subscribe/{id}', [FollowController::class, 'Follow']);
+        Route::get('/profile/followers', [FollowController::class, 'index']);
+        Route::post('/profile/follow/{id}', [FollowController::class, 'Follow']);
         Route::post('/profile/update/{id}', [UserControler::class, 'update_user']);
-        
+
         Route::post('/forum/{id}/like-action', [PostController::class, 'like']);
         Route::post('/forum/create/post', [PostController::class, 'makePost']);
         Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
-        
+
         Route::post('/template', function () {
             return 'template';
         })->name('template');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -24,5 +25,15 @@ class FollowController extends Controller
             $currentUser->followings()->attach($userId);
             return response()->json(['code' => 'followed']);
         }
+    }
+    public function index()
+    {
+        $userId = Auth::user()->id;
+        $user = \App\Models\User::find($userId);
+        $subscriptions = $user->following;
+
+        $names = $subscriptions->pluck('name');
+
+        return response()->json(['data' => $names]);
     }
 }
