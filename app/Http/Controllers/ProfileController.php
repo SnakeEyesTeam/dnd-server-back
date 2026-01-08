@@ -91,7 +91,7 @@ class ProfileController extends Controller
             ],
             'token' => [
                 'required',
-                'exists:users,password_resets' 
+                'exists:users,password_resets'
             ],
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
@@ -105,8 +105,8 @@ class ProfileController extends Controller
         }
 
         if (isTimeExceeded($request->token)) {
-            $userId = Auth::user()->id;
-            User::where('id', $userId)->update(['password' => Hash::make($request->password),'password_resets'=>null]);
+            $userId = $request->user_id;
+            User::where('id', $userId)->update(['password' => Hash::make($request->password), 'password_resets' => null]);
             return response()->json("Пароль изменен");
         }
         return response()->json("Время истекло");
@@ -169,13 +169,24 @@ class ProfileController extends Controller
             'password_resets' => $token,
         ]);
 
-        // Отправляем письмо
-        Mail::to("sasabirukov665@gmail.com")->send(new \App\Mail\ResetPassword($token, $user->email));
+        Mail::to($request->email)->send(new \App\Mail\ResetPassword($token, $user->email));
 
         return response()->json(['message' => 'Письмо с инструкциями отправлено.'], 200);
     }
     public function post(Request $request)
     {
         return response()->json(["Post" => post::where('user_id', Auth::user()->id)->get()]);
+    }
+
+    public function banReason(Request $request)
+    {
+        $reason = Ban::where('user_id', $request->id)->first();
+        $AdminName = User::where('id', $reason->admin_id)->value("name");
+        return response()->json([
+            'NameAdmin' => $AdminName,
+            'Reason' => $reason->content,
+            'UnbanTime' => $reason->unban_time,
+            'BanTime'=>$reason->ban_time
+        ]);
     }
 }

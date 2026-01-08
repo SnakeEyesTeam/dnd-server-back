@@ -53,4 +53,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ban::class, 'Uid', 'id');
     }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'followed_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'followed_id', 'follower_id');
+    }
 }

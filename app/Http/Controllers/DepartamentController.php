@@ -40,7 +40,6 @@ class DepartamentController extends Controller
     {
         $query = Post::where('departament_id', $id);
 
-        // Обработка дополнительных параметров
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {

@@ -11,7 +11,8 @@ class Post extends Model
         'content',
         'user_id',
         'tags',
-        'departament_id'
+        'departament_id',
+        'files'
     ];
 
 }

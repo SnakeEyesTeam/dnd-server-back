@@ -10,17 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('characters', function (Blueprint $table) {
             $table->id();
-            $table->string("title", 52);
-            $table->string("content", 255);
-            $table->string("tags")->nullable();
-            $table->string("files")->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('departament_id');
-            $table->timestamps();
+            $table->string("name");
+            $table->string("img");
+            $table->bigInteger("initiative");
 
-            $table->foreign('departament_id')->references('id')->on('departaments')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('user_id');
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('characters');
     }
 };

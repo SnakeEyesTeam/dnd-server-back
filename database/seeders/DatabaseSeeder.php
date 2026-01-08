@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +15,96 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $roles = [
+            ['name' => 'user'],
+            ['name' => 'admin'],
+            ['name' => 'moder'],
+        ];
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach ($roles as $role) {
+            DB::table('roles')->insert($role);
+        }
+
+        $users = [
+            [
+                'name' => 'Sanek',
+                'email' => 'jopan.19@mail.ru',
+                'password' => Hash::make('11111111D'),
+                'role_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Sanek1',
+                'email' => 'jopan1.19@mail.ru',
+                'password' => Hash::make('11111111D'),
+                'role_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Sanek2',
+                'email' => 'jopan2.19@mail.ru',
+                'password' => Hash::make('11111111D'),
+                'role_id' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ];
+
+        foreach ($users as $user) {
+            DB::table('users')->insert($user);
+        }
+
+        $departaments = [
+            ['name' => 'HR', 'img' => 'hr.png'],
+            ['name' => 'Finance', 'img' => 'finance.png'],
+            ['name' => 'IT', 'img' => 'it.png'],
+        ];
+
+        foreach ($departaments as $departament) {
+            DB::table('departaments')->insert($departament);
+        }
+
+        $users = [
+            ['name' => 'User1', 'email' => 'user1@example.com', 'password' => Hash::make('password'), 'role_id' => 1],
+            ['name' => 'User2', 'email' => 'user2@example.com', 'password' => Hash::make('password'), 'role_id' => 2],
+        ];
+
+        foreach ($users as $userData) {
+            $user = \App\Models\User::firstOrCreate(
+                ['email' => $userData['email']],
+                [
+                    'name' => $userData['name'],
+                    'password' => $userData['password'],
+                    'role_id' => $userData['role_id'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]
+            );
+        }
+
+        $posts = [
+            [
+                'title' => 'Первый пост',
+                'content' => 'Это содержимое первого поста.',
+                'tags' => 'тег1, тег2',
+                'files' => 'file1.pdf',
+                'user_id' => 1,
+                'departament_id' => 1,
+            ],
+            [
+                'title' => 'Второй пост',
+                'content' => 'Это содержимое второго поста.',
+                'tags' => 'тег3',
+                'files' => null,
+                'user_id' => 2,
+                'departament_id' => 2,
+            ],
+        ];
+
+        foreach ($posts as $post) {
+            DB::table('posts')->insert($post);
+        }
     }
 }
