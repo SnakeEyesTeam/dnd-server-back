@@ -22,6 +22,6 @@ class RoleMiddleware
         if (Auth::check() && in_array($rolename, $role)) {
             return $next($request);
         }
-        return response()->json('You not role',403);
+        return response()->json('You not role', 403);
     }
 }

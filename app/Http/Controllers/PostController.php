@@ -12,7 +12,6 @@ use Auth;
 
 class PostController extends Controller
 {
-    //
     public function createPost(Request $request)
     {
         $user = $request->user();

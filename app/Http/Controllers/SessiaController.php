@@ -22,13 +22,13 @@ class SessiaController extends Controller
         ]);
 
         $session = User_session::create($data);
-        return response()->json(["data"=>$session], 201);
+        return response()->json(["data" => $session], 201);
     }
 
     public function show($id)
     {
         $session = User_session::findOrFail($id);
-        return response()->json(["data"=>$session]);
+        return response()->json(["data" => $session]);
     }
 
 
@@ -46,7 +46,7 @@ class SessiaController extends Controller
         ]);
 
         $session->update($data);
-        return response()->json(["code"=>'success']);
+        return response()->json(["code" => 'success']);
     }
 
 

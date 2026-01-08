@@ -5,6 +5,7 @@ use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessiaController;
@@ -16,14 +17,13 @@ use App\Http\Controllers\ComentController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::post('/profile/{id}/ban-action', [ProfileController::class, 'ban']);
-
-        Route::resource('/entity', EntityController::class);
+        Route::resource('/session/map', EntityController::class);
     });
     Route::middleware('is-banned')->group(function () {
         Route::resource('/maps', MapController::class);
-
+        
         Route::resource('/forum/comment', ComentController::class);
-
+        
         Route::get('/profile/{id}/info', [ProfileController::class, 'info']);
         Route::get('/profile/{id}/post', [ProfileController::class, 'post']);
         Route::get('/profile/{id}/characters', [CharactersController::class, 'getCharacter']);
@@ -31,12 +31,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/me', [ProfileController::class, 'index']);
         Route::post('/profile/follow/{id}', [FollowController::class, 'Follow']);
         Route::post('/profile/update/{id}', [UserControler::class, 'update_user']);
-        Route::resource('/profile/sessions', SessiaController::class);
-
+        
         Route::post('/forum/{id}/like-action', [PostController::class, 'like']);
         Route::post('/forum/create/post', [PostController::class, 'createPost']);
         Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
-
+        
+        Route::resource('/sessions', SessiaController::class);
+        Route::resource('/session/entity', EntityController::class);
+        Route::resource('/session/object', ObjectController::class);
     });
     Route::get('/profile/{id}/ban-reason', [ProfileController::class, 'banReason']);
 });

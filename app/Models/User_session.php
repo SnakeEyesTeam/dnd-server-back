@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User_session extends Model
 {
-     protected $table = 'user_sessions';
+    protected $table = 'user_sessions';
 
     protected $fillable = [
         'user_id',
@@ -15,9 +15,8 @@ class User_session extends Model
         'last_activity',
     ];
 
-    public $timestamps = false; // если не используете created_at/updated_at
+    public $timestamps = false;
 
-    // Связь с пользователем
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -48,6 +48,6 @@ class DepartamentController extends Controller
 
         $posts = $query->skip($skip)->take($take)->get();
 
-        return response()->json(["data"=>$posts]);
+        return response()->json(["data" => $posts]);
     }
 }

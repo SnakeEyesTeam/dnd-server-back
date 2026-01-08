@@ -30,9 +30,8 @@ function extractTime($inputString)
         return null;
     }
 
-    // Время в формате "HH-MM-SS"
     $timeString = str_replace('-', ':', $datetimeParts[1]);
-    return $timeString; // возвращает "11:43:48"
+    return $timeString;
 }
 
 function isTimeExceeded($inputString, $minutesThreshold = 5)
@@ -43,7 +42,6 @@ function isTimeExceeded($inputString, $minutesThreshold = 5)
     }
 
     $currentTime = new DateTime();
-    // Создаем объект DateTime из извлеченного времени, предполагая сегодняшнюю дату
     $dateTimeString = $currentTime->format('Y-m-d') . ' ' . $timeStr;
     $startTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTimeString);
 
@@ -51,7 +49,6 @@ function isTimeExceeded($inputString, $minutesThreshold = 5)
         return "Ошибка при обработке времени";
     }
 
-    // Разница в минутах
     $diffMinutes = $currentTime->getTimestamp() - $startTime->getTimestamp();
     $diffMinutes = abs($diffMinutes) / 60;
 
@@ -65,7 +62,6 @@ function isTimeExceeded($inputString, $minutesThreshold = 5)
 
 class ProfileController extends Controller
 {
-    //
     public function update_user(Request $request)
     {
         $user = User::FindOrFail(Auth::user()->id);
@@ -117,7 +113,6 @@ class ProfileController extends Controller
     {
         $user = User::find($id);
 
-        // dd($request->all());
 
         if ($user && $user->is_baned === 0) {
             Ban::create([

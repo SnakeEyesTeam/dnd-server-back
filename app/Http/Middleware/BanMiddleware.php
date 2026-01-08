@@ -23,9 +23,9 @@ class BanMiddleware
             $bans = Ban::where("id", $Bid)->get();
             $admiN = User::where("id", $bans->value("Aid"))->value("name");
             $reasan = $bans->value("Desc");
-            $unban_time = $bans ->value("unban_time");
+            $unban_time = $bans->value("unban_time");
 
-            return response()->json(['message' => 'Ты забанен ' .$admiN  . ' по причине ' . $reasan  . ' бан истекает:' . $unban_time], 403);
+            return response()->json(['message' => 'Ты забанен ' . $admiN . ' по причине ' . $reasan . ' бан истекает:' . $unban_time], 403);
         }
 
         return $next($request);
