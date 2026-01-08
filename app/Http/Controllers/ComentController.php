@@ -10,12 +10,7 @@ class ComentController extends Controller
 {
     public function index()
     {
-        //
-        return response()->json(["Comments" => Comment::all()]);
-    }
-
-    public function create()
-    {
+        return response()->json(["data" => Comment::all()]);
     }
 
     public function store(Request $request)
@@ -37,21 +32,8 @@ class ComentController extends Controller
     }
 
 
-    public function show(string $id)
-    {
-        //
-    }
-
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-
     public function update(Request $request, string $id)
     {
-        //
         Comment::where('id', $id)->update([
             'content' => $request->contents
         ]);

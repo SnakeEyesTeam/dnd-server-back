@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Auth;
 
-class BanedMiddleware
+class BanMiddleware
 {
     /**
      * Handle an incoming request.

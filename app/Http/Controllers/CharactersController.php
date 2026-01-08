@@ -3,47 +3,62 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class CharactersController extends Controller
 {
-    //
-    public function getCharacter()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $response = Http::withoutVerifying()->get('https://aternia.games/url/sLKZc4');
+        //
+    }
 
-        if (!$response->ok()) {
-            return response()->json(['error' => 'Ошибка получения данных'], 500);
-        }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
 
-        $html = $response->body();
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html);
-        libxml_clear_errors();
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
 
-        $xpath = new \DOMXPath($dom);
-        
-        // Имя
-        $nameNode = $xpath->query('//span[contains(@class, "title_character_name")]')->item(0);
-        $name = $nameNode ? $nameNode->nodeValue : null;
-        // Инициатива
-        $initiativeNode = $xpath->query('//input[@data-branch="stats.initiative"]')->item(0);
-        $initiative = $initiativeNode ? trim($initiativeNode->getAttribute('value')) : null;
-        
-        // Фото
-        $imgNode = $xpath->query('//img[@id="character_img"]')->item(0);
-        $imgUrl = $imgNode ? $imgNode->getAttribute('src') : null;
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
 
-        if ($imgUrl && !preg_match('/^https?:\/\//', $imgUrl)) {
-            $imgUrl = 'https://aternia.games' . $imgUrl;
-        }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
 
-        return response()->json([
-            'name' => $name,
-            'initiative' => $initiative,
-            'image' => $imgUrl,
-        ]);
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

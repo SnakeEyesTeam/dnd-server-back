@@ -65,6 +65,6 @@ class MapController extends Controller
     public function destroy(string $id)
     {
         //
-        Maps::destroy($id);
+        Map::destroy($id);
     }
 }

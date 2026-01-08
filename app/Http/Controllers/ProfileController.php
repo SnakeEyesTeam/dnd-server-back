@@ -66,18 +66,18 @@ function isTimeExceeded($inputString, $minutesThreshold = 5)
 class ProfileController extends Controller
 {
     //
-    public function update_user(Request $request, $id)
+    public function update_user(Request $request)
     {
-        $user = User::FindOrFail($id);
+        $user = User::FindOrFail(Auth::user()->id);
         if ($request->hasFile('ava')) {
             $imageName = Str::random(32) . "." . $request->ava->getClientOriginalExtension();
             $user->update(['ava' => $imageName]);
 
             Storage::disk('public')->put($imageName, file_get_contents($request->ava));
 
-            return response()->json($user);
+            return response()->json(['data' => $user]);
         } else {
-            return response()->json('uncomplited');
+            return response()->json(['code' => 'uncomplited']);
         }
     }
 
@@ -91,7 +91,7 @@ class ProfileController extends Controller
             ],
             'token' => [
                 'required',
-                'exists:users,password_resets'
+                'exists:users,resetToken'
             ],
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
@@ -100,16 +100,16 @@ class ProfileController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-                'errors' => $validator->errors()
+                'code' => $validator->errors()
             ], 422);
         }
 
         if (isTimeExceeded($request->token)) {
             $userId = $request->user_id;
-            User::where('id', $userId)->update(['password' => Hash::make($request->password), 'password_resets' => null]);
-            return response()->json("Пароль изменен");
+            User::where('id', $userId)->update(['password' => Hash::make($request->password), 'resetToken' => null]);
+            return response()->json(["code" => "success"]);
         }
-        return response()->json("Время истекло");
+        return response()->json(["code" => "error"]);
     }
 
 
@@ -117,10 +117,12 @@ class ProfileController extends Controller
     {
         $user = User::find($id);
 
+        // dd($request->all());
+
         if ($user && $user->is_baned === 0) {
             Ban::create([
                 'user_id' => $user->id,
-                'content' => $request->input('content', 'Блокировка по решению администратора'),
+                'reason' => $request->input('reason', 'Блокировка по решению администратора'),
                 'admin_id' => Auth::user()->id,
                 'ban_time' => now(),
                 'unban_time' => $request->unban,
@@ -131,25 +133,25 @@ class ProfileController extends Controller
             $user->ban_id = $ban_id;
 
             $user->save();
-            return response()->json('ban success');
+            return response()->json(["code" => 'ban success']);
         } elseif ($user && $user->is_baned === 1) {
             $user->is_baned = false;
             $user->ban_id = null;
             $user->save();
             Ban::where('user_id', $user->id)->delete();
 
-            return response()->json('Unbundle');
+            return response()->json(['code' => 'Unbundle']);
         } else {
-            return response()->json('User not found');
+            return response()->json(['code' => 'error']);
         }
     }
 
     public function info()
     {
-        return response()->json(["Users" => User::where('id', Auth::user()->id)->get()]);
+        return response()->json(["data" => User::where('id', Auth::user()->id)->get()]);
     }
 
-    public function sendResetLink(Request $request)
+    public function reset_password(Request $request)
     {
         // $request->validate([
         //     'email' => 'required|email',
@@ -159,23 +161,23 @@ class ProfileController extends Controller
 
 
         if (!$user) {
-            return response()->json(['message' => 'Пользователь не найден'], 404);
+            return response()->json(['code' => 'error'], 404);
         }
 
         $token = Str::random(60) . "," . Carbon::now()->format('Y-m-d_H-i-s');
 
 
         User::where('email', $request->email)->update([
-            'password_resets' => $token,
+            'resetToken' => $token,
         ]);
 
         Mail::to($request->email)->send(new \App\Mail\ResetPassword($token, $user->email));
 
-        return response()->json(['message' => 'Письмо с инструкциями отправлено.'], 200);
+        return response()->json(['code' => 'success.'], 200);
     }
     public function post(Request $request)
     {
-        return response()->json(["Post" => post::where('user_id', Auth::user()->id)->get()]);
+        return response()->json(["data" => post::where('user_id', Auth::user()->id)->get()]);
     }
 
     public function banReason(Request $request)
@@ -184,9 +186,25 @@ class ProfileController extends Controller
         $AdminName = User::where('id', $reason->admin_id)->value("name");
         return response()->json([
             'NameAdmin' => $AdminName,
-            'Reason' => $reason->content,
+            'Reason' => $reason->reason,
             'UnbanTime' => $reason->unban_time,
-            'BanTime'=>$reason->ban_time
+            'BanTime' => $reason->ban_time
         ]);
+    }
+
+    public function index()
+    {
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+
+        if ($user) {
+            return response()->json([
+                'name' => $user->name,
+                'email' => $user->email,
+                'ava' => $user->ava,
+            ]);
+        } else {
+            return response()->json(['code' => 'error'], 404);
+        }
     }
 }

@@ -12,28 +12,7 @@ class DepartamentController extends Controller
     //
     public function index()
     {
-        return response()->json(["Departament" => Departament::all()]);
-    }
-    public function makeDep(Request $request)
-    {
-        $rules = [
-            'name' => 'required|unique:Departaments',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages = [
-            'required' => ':attribute обязательное поля',
-            'unique' => ':attribute данное поле занято',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-
-        Departament::create([
-            "name" => $request->name
-        ]);
+        return response()->json(["data" => Departament::all()]);
     }
 
     public function getDepartament($id, Request $request)
@@ -69,6 +48,6 @@ class DepartamentController extends Controller
 
         $posts = $query->skip($skip)->take($take)->get();
 
-        return response()->json($posts);
+        return response()->json(["data"=>$posts]);
     }
 }

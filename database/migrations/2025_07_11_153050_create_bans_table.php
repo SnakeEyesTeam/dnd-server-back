@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('bans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('content');
+            $table->string('reason');
             $table->unsignedBigInteger('admin_id');
             $table->timestamp('ban_time')->useCurrent();
             $table->timestamp('unban_time')->nullable();

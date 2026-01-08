@@ -59,38 +59,43 @@ class UserControler extends Controller
             $request->user()->currentAccessToken()->delete();
         }
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'success']);
     }
 
     public function auth(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $loginOrEmail = $request->input('login');
 
+        $user = User::where('email', $loginOrEmail)
+            ->orWhere('name', $loginOrEmail)
+            ->first();
 
-
-        if (Hash::check($request->password, $user->password)) {
-            $token = $user->createToken('token')->plainTextToken;
-            return response()->json($token);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Неверные учетные данные'], 401);
         }
 
+        $token = $user->createToken('token')->plainTextToken;
+
+        return response()->json(['token' => $token]);
     }
 
-    public function getUser(Request $request){
+    public function getUser(Request $request)
+    {
         $search = $request->input('search', null);
         $skip = (int) $request->input('skip', 0);
         $take = (int) $request->input('take', 10);
-        
+
         $usersQuery = User::query();
 
         if ($search) {
             $usersQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%$search%")
-                  ->orWhere('email', 'like', "%$search%");
+                    ->orWhere('email', 'like', "%$search%");
             });
         }
 
         $users = $usersQuery->skip($skip)->take($take)->get();
 
-        return response()->json($users);
+        return response()->json(['data' => $users]);
     }
 }

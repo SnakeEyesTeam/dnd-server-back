@@ -13,7 +13,7 @@ use Auth;
 class PostController extends Controller
 {
     //
-    public function makePost(Request $request)
+    public function createPost(Request $request)
     {
         $user = $request->user();
         $rules = [
@@ -27,7 +27,7 @@ class PostController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'errors' => $validator->errors()
+                'code' => $validator->errors()
             ], 422);
         }
 
@@ -48,6 +48,8 @@ class PostController extends Controller
             'user_id' => $user->id,
             'departament_id' => $request->Did,
         ]);
+
+        return response()->json(['code' => 'success']);
     }
     public function index(Request $request)
     {

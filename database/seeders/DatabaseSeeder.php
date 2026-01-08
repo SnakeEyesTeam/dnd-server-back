@@ -66,24 +66,6 @@ class DatabaseSeeder extends Seeder
             DB::table('departaments')->insert($departament);
         }
 
-        $users = [
-            ['name' => 'User1', 'email' => 'user1@example.com', 'password' => Hash::make('password'), 'role_id' => 1],
-            ['name' => 'User2', 'email' => 'user2@example.com', 'password' => Hash::make('password'), 'role_id' => 2],
-        ];
-
-        foreach ($users as $userData) {
-            $user = \App\Models\User::firstOrCreate(
-                ['email' => $userData['email']],
-                [
-                    'name' => $userData['name'],
-                    'password' => $userData['password'],
-                    'role_id' => $userData['role_id'],
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]
-            );
-        }
-
         $posts = [
             [
                 'title' => 'Первый пост',
