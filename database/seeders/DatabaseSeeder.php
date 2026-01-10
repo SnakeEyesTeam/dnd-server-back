@@ -57,9 +57,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $departaments = [
-            ['name' => 'Dnd', 'img' => 'dnd.png'],
-            ['name' => 'Web', 'img' => 'dnd.png'],
-            ['name' => 'Прочее', 'img' => 'dnd.png'],
+            ['name' => 'Dnd', 'img' => 'dnd.png','fixed_post'=>1],
+            ['name' => 'Web', 'img' => 'dnd.png','fixed_post'=>2],
+            ['name' => 'Прочее', 'img' => 'dnd.png','fixed_post'=>1],
         ];
 
         foreach ($departaments as $departament) {

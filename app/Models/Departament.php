@@ -10,7 +10,8 @@ class departament extends Model
     protected $fillable = [
         'id',
         'name',
-        'img'
+        'img',
+        'fixed_post'
     ];
     public $timestamps = false;
 }

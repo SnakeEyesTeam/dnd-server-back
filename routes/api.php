@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::middleware('is-banned')->group(function () {
         Route::resource('/map', MapController::class);
-        
+
         Route::resource('/forum/comment', ComentController::class);
-        
+
         Route::get('/profile/{id}/info', [ProfileController::class, 'index']);
         Route::get('/profile/{id}/post', [ProfileController::class, 'show']);
         Route::get('/profile/{id}/characters', [CharacterController::class, 'getCharacter']);
@@ -31,11 +31,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/me', [ProfileController::class, 'view']);
         Route::post('/profile/{id}/follow', [FollowController::class, 'follow']);
         Route::post('/profile/update', [UserControler::class, 'update']);
-        
+
         Route::post('/forum/{id}/like-action', [PostController::class, 'likeAction']);
+        Route::post('/forum/{id}/my-like', [PostController::class, 'isLike']);
         Route::post('/forum/create/post', [PostController::class, 'store']);
         Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
-        
+
         Route::resource('/session', SessionController::class);
         Route::resource('/session/entity', EntityController::class);
         Route::resource('/session/object', ObjectController::class);
@@ -49,7 +50,7 @@ Route::post('/profile/change-password', [ProfileController::class, 'changePasswo
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPassword']);
 
 Route::get('/users', [UserControler::class, "index"]);
-Route::get(' /forum/{id}/departament', [DepartamentController::class ,"show"]);
+Route::get(' /forum/{id}/departament', [DepartamentController::class, "show"]);
 
 Route::get('/forum/departaments', [DepartamentController::class, 'index']);
 Route::get('/forum/{id}/post', [PostController::class, 'index']);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\post;
@@ -106,6 +105,18 @@ class PostController extends Controller
         } else {
             $existingLike->delete();
             return response()->json(['message' => 'Лайк удален']);
+        }
+    }
+    public function isLike($postId)
+    {
+        $like = Like::where('post_id', $postId)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if ($like) {
+            return response()->json(['data' => true]);
+        } else {
+            return response()->json(['data' => false]);
         }
     }
 }
