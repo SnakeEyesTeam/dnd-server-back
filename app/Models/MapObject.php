@@ -11,5 +11,7 @@ class MapObject extends Model
     protected $fillable = [
         'name',
         'path',
+        'user_id',
+        'source_id'
     ];
 }

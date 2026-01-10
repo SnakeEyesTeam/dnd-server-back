@@ -18,6 +18,11 @@ return new class extends Migration
             $table->mediumInteger("iniciative");
             $table->string("discription");
             $table->bigInteger('size');
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->unsignedBigInteger('source_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
         });
     }
 

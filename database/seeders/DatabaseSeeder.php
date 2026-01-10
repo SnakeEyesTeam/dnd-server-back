@@ -57,9 +57,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $departaments = [
-            ['name' => 'HR', 'img' => 'hr.png'],
-            ['name' => 'Finance', 'img' => 'finance.png'],
-            ['name' => 'IT', 'img' => 'it.png'],
+            ['name' => 'Dnd', 'img' => 'dnd.png'],
+            ['name' => 'Web', 'img' => 'dnd.png'],
+            ['name' => 'Прочее', 'img' => 'dnd.png'],
         ];
 
         foreach ($departaments as $departament) {
@@ -87,6 +87,22 @@ class DatabaseSeeder extends Seeder
 
         foreach ($posts as $post) {
             DB::table('posts')->insert($post);
+        }
+
+        $sources = [
+            [
+                'name'=> 'Кастомный',
+            ],
+            [
+                'name'=> 'Новогодний набор',
+            ],
+            [
+                'name'=> 'Хелуинский набор',
+            ],
+        ];
+
+        foreach ($sources as $source) {
+            DB::table('sources')->insert($source);
         }
     }
 }

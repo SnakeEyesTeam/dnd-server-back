@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('content');
             $table->string("files")->nullable();
             $table->unsignedBigInteger('post_id');
-            $table->timestamp('timestamp');
+            $table->timestamps();
 
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
         });

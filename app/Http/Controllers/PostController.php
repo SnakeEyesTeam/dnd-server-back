@@ -20,7 +20,7 @@ class PostController extends Controller
         $rules = [
             'title' => 'required|unique:posts',
             'payload_content' => 'required',
-            'tags' => 'nullable|array', 
+            'tags' => 'nullable|array',
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
             'required' => ':attribute обязательное поля',
@@ -88,7 +88,7 @@ class PostController extends Controller
         }
     }
 
-    public function like(Request $request)
+    public function likeAction(Request $request)
     {
         $userId = Auth::user()->id;
         $postId = $request->id;

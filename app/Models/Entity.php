@@ -12,7 +12,9 @@ class Entity extends Model
         'path',
         'iniciative',
         'discription',
-        'size'
+        'size',
+        'user_id',
+        'source_id'
     ];
 
     public $timestamps = false;

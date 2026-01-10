@@ -10,7 +10,7 @@ class ComentController extends Controller
 {
     public function show(string $id)
     {
-        return response()->json(["data" => Comment::where("post_id",$id)->all()]);
+        return response()->json(["data" => Comment::where("post_id", $id)->all()]);
     }
 
     public function store(Request $request)

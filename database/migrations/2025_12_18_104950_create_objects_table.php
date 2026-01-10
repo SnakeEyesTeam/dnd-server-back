@@ -14,7 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 80)->isNotEmpty();
             $table->string('path', 255)->isNotEmpty();
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->unsignedBigInteger('source_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
         });
     }
 

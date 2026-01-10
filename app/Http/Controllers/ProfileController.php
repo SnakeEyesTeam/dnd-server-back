@@ -62,7 +62,7 @@ function isTimeExceeded($inputString, $minutesThreshold = 5)
 
 class ProfileController extends Controller
 {
-    public function update_user(Request $request)
+    public function update(Request $request)
     {
         $user = User::FindOrFail(Auth::user()->id);
         if ($request->hasFile('ava')) {
@@ -77,7 +77,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function change_password(Request $request)
+    public function changePassword(Request $request)
     {
         $rules = [
             'password' => [
@@ -109,7 +109,7 @@ class ProfileController extends Controller
     }
 
 
-    public function ban(Request $request, $id)
+    public function banAction(Request $request, $id)
     {
         $user = User::find($id);
 
@@ -146,7 +146,7 @@ class ProfileController extends Controller
         return response()->json(["data" => User::where('id', Auth::user()->id)->get()]);
     }
 
-    public function reset_password(Request $request)
+    public function resetPassword(Request $request)
     {
         // $request->validate([
         //     'email' => 'required|email',

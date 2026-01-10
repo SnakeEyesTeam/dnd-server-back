@@ -28,7 +28,7 @@ class ResetPassword extends Mailable
         ]);
 
         return $this->subject('Восстановление пароля')
-            ->view('emails.reset')
+            ->view('templates.reset-password')
             ->with([
                 'resetUrl' => $resetUrl,
             ]);

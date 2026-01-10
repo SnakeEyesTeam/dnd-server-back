@@ -17,11 +17,14 @@ class ObjectController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:80',
+            'path' => 'sometimes|string',
+            'user_id' => 'sometimes|integer',
+            'source_id' => 'sometimes|integer',
         ]);
 
         $object = MapObject::create($validated);
 
-        return response()->json(["data"=>$object], 201);
+        return response()->json(["data" => $object], 201);
     }
 
     public function destroy($id)
