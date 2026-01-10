@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User_session;
 
-class SessiaController extends Controller
+class SessionController extends Controller
 {
     public function index()
     {
@@ -30,25 +30,6 @@ class SessiaController extends Controller
         $session = User_session::findOrFail($id);
         return response()->json(["data" => $session]);
     }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $session = User_session::findOrFail($id);
-
-        $data = $request->validate([
-            'session_token' => 'sometimes|required|string',
-            'ip_address' => 'sometimes|nullable|string|max:45',
-            'last_activity' => 'sometimes|nullable|date',
-        ]);
-
-        $session->update($data);
-        return response()->json(["code" => 'success']);
-    }
-
 
     public function destroy($id)
     {

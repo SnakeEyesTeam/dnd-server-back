@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Illuminate\Http\Request;
 use App\Models\User;
 
 class FollowController extends Controller
 {
-    public function Follow($userId)
+    public function follow($userId)
     {
         $currentUser = auth()->user();
 
@@ -29,10 +28,10 @@ class FollowController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
-        $user = \App\Models\User::find($userId);
-        $subscriptions = $user->following;
+        $user = User::find($userId);
+        $follow = $user->following;
 
-        $names = $subscriptions->pluck('name');
+        $names = $follow->pluck('name');
 
         return response()->json(['data' => $names]);
     }

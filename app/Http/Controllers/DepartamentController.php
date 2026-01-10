@@ -15,7 +15,7 @@ class DepartamentController extends Controller
         return response()->json(["data" => Departament::all()]);
     }
 
-    public function getDepartament($id, Request $request)
+    public function show($id, Request $request)
     {
         $query = Post::where('departament_id', $id);
 

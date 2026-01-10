@@ -8,9 +8,9 @@ use Str;
 
 class ComentController extends Controller
 {
-    public function index()
+    public function show(string $id)
     {
-        return response()->json(["data" => Comment::all()]);
+        return response()->json(["data" => Comment::where("post_id",$id)->all()]);
     }
 
     public function store(Request $request)
@@ -25,7 +25,7 @@ class ComentController extends Controller
         $path = $file->storeAs('comment_file', $fileName);
 
         Comment::create([
-            'content' => $request->contents,
+            'content' => $request->payload_content,
             'files' => $path,
             'post_id' => $request->post_id
         ]);
@@ -35,7 +35,7 @@ class ComentController extends Controller
     public function update(Request $request, string $id)
     {
         Comment::where('id', $id)->update([
-            'content' => $request->contents
+            'content' => $request->payload_content
         ]);
     }
 

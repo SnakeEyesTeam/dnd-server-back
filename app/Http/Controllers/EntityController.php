@@ -8,12 +8,16 @@ use App\Models\Entity;
 
 class EntityController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function index()
+    {
+        $entities = Entity::all();
+        
+        return response()->json(["data"=>$entities]);
+    }
+
     public function store(Request $request)
     {
-        //
+
         Entity::create([
             'name' => $request->name,
             'path' => $request->path,

@@ -64,7 +64,7 @@ class UserControler extends Controller
 
     public function auth(Request $request)
     {
-        $loginOrEmail = $request->input('login');
+        $loginOrEmail = $request->input('name');
 
         $user = User::where('email', $loginOrEmail)
             ->orWhere('name', $loginOrEmail)
@@ -79,7 +79,7 @@ class UserControler extends Controller
         return response()->json(['token' => $token]);
     }
 
-    public function getUser(Request $request)
+    public function index(Request $request)
     {
         $search = $request->input('search', null);
         $skip = (int) $request->input('skip', 0);

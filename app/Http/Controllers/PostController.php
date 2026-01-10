@@ -7,17 +7,20 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\post;
 use Str;
-use App\Models\Likes;
+use App\Models\Like;
 use Auth;
 
 class PostController extends Controller
 {
-    public function createPost(Request $request)
+    public function store(Request $request)
     {
+        dd($request->all());
         $user = $request->user();
+
         $rules = [
             'title' => 'required|unique:posts',
-            'contents' => 'required',
+            'payload_content' => 'required',
+            'tags' => 'nullable|array', 
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
             'required' => ':attribute обязательное поля',
@@ -30,7 +33,6 @@ class PostController extends Controller
             ], 422);
         }
 
-
         $file = $request->file('files');
         $randomName = Str::random(20);
 
@@ -40,10 +42,21 @@ class PostController extends Controller
 
         $path = $file->storeAs('post_file', $fileName);
 
+        $tagsInput = $request->input('tags');
+
+        if (is_array($tagsInput)) {
+            $tagsString = implode(',', $tagsInput);
+        } elseif (is_string($tagsInput)) {
+            $tagsString = $tagsInput;
+        } else {
+            $tagsString = '';
+        }
+
         $Post = Post::create([
             'title' => $request->title,
             'files' => $path,
-            'content' => $request->contents,
+            'content' => $request->payload_content,
+            'tags' => $tagsString,
             'user_id' => $user->id,
             'departament_id' => $request->Did,
         ]);
@@ -80,13 +93,13 @@ class PostController extends Controller
         $userId = Auth::user()->id;
         $postId = $request->id;
 
-        $existingLike = Likes::where('user_id', $userId)
-            ->where('posts_id', $postId)
+        $existingLike = Like::where('user_id', $userId)
+            ->where('post_id', $postId)
             ->first();
 
         if (!$existingLike) {
-            Likes::create([
-                'posts_id' => $postId,
+            Like::create([
+                'post_id' => $postId,
                 'user_id' => $userId,
             ]);
             return response()->json(['message' => 'Лайк добавлен']);

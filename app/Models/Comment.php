@@ -13,5 +13,4 @@ class Comment extends Model
         'files',
         'post_id'
     ];
-    public $timestamps = false;
 }

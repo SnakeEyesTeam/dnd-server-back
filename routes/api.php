@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CharactersController;
+use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FollowController;
@@ -8,7 +8,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SessiaController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\ComentController;
@@ -20,23 +20,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/session/map', EntityController::class);
     });
     Route::middleware('is-banned')->group(function () {
-        Route::resource('/maps', MapController::class);
+        Route::resource('/map', MapController::class);
         
         Route::resource('/forum/comment', ComentController::class);
         
-        Route::get('/profile/{id}/info', [ProfileController::class, 'info']);
-        Route::get('/profile/{id}/post', [ProfileController::class, 'post']);
-        Route::get('/profile/{id}/characters', [CharactersController::class, 'getCharacter']);
+        Route::get('/profile/{id}/info', [ProfileController::class, 'index']);
+        Route::get('/profile/{id}/post', [ProfileController::class, 'show']);
+        Route::get('/profile/{id}/characters', [CharacterController::class, 'getCharacter']);
         Route::get('/profile/followers', [FollowController::class, 'index']);
-        Route::get('/profile/me', [ProfileController::class, 'index']);
-        Route::post('/profile/follow/{id}', [FollowController::class, 'Follow']);
-        Route::post('/profile/update/{id}', [UserControler::class, 'update_user']);
+        Route::get('/profile/me', [ProfileController::class, 'view']);
+        Route::post('/profile/{id}/follow', [FollowController::class, 'follow']);
+        Route::post('/profile/update', [UserControler::class, 'update_user']);
         
         Route::post('/forum/{id}/like-action', [PostController::class, 'like']);
-        Route::post('/forum/create/post', [PostController::class, 'createPost']);
+        Route::post('/forum/create/post', [PostController::class, 'store']);
         Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
         
-        Route::resource('/sessions', SessiaController::class);
+        Route::resource('/session', SessionController::class);
         Route::resource('/session/entity', EntityController::class);
         Route::resource('/session/object', ObjectController::class);
     });
@@ -48,8 +48,8 @@ Route::post('/template', function () {
 Route::post('/profile/change-password', [ProfileController::class, 'change_password']);
 Route::post('/profile/reset-password', [ProfileController::class, 'reset_password']);
 
-Route::get('/users', [UserControler::class, "getUser"]);
-Route::get(' /forum/{id}/deparmnent', [DepartamentController::class, "getDepartament"]);
+Route::get('/users', [UserControler::class, "index"]);
+Route::get(' /forum/{id}/deparmnent', [DepartamentController::class ,"show"]);
 
 Route::get('/forum/departaments', [DepartamentController::class, 'index']);
 Route::get('/forum/{id}/post', [PostController::class, 'index']);

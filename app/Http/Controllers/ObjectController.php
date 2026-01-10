@@ -13,36 +13,15 @@ class ObjectController extends Controller
         return response()->json($objects);
     }
 
-    public function show($id)
-    {
-        $object = MapObject::findOrFail($id);
-        return response()->json($object);
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:80',
-            'path' => 'required|string|max:255',
         ]);
 
         $object = MapObject::create($validated);
 
-        return response()->json($object, 201);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $object = MapObject::findOrFail($id);
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:80',
-            'path' => 'required|string|max:255',
-        ]);
-
-        $object->update($validated);
-
-        return response()->json($object);
+        return response()->json(["data"=>$object], 201);
     }
 
     public function destroy($id)

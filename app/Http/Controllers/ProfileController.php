@@ -141,7 +141,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function info()
+    public function index()
     {
         return response()->json(["data" => User::where('id', Auth::user()->id)->get()]);
     }
@@ -170,7 +170,7 @@ class ProfileController extends Controller
 
         return response()->json(['code' => 'success.'], 200);
     }
-    public function post(Request $request)
+    public function show(Request $request)
     {
         return response()->json(["data" => post::where('user_id', Auth::user()->id)->get()]);
     }
@@ -180,14 +180,14 @@ class ProfileController extends Controller
         $reason = Ban::where('user_id', $request->id)->first();
         $AdminName = User::where('id', $reason->admin_id)->value("name");
         return response()->json([
-            'NameAdmin' => $AdminName,
-            'Reason' => $reason->reason,
-            'UnbanTime' => $reason->unban_time,
-            'BanTime' => $reason->ban_time
+            'nameAdmin' => $AdminName,
+            'reason' => $reason->reason,
+            'unbanTime' => $reason->unban_time,
+            'banTime' => $reason->ban_time
         ]);
     }
 
-    public function index()
+    public function view()
     {
         $userId = Auth::user()->id;
         $user = User::find($userId);

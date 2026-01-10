@@ -16,14 +16,12 @@ return new class extends Migration {
             $table->string('content');
             $table->string("files")->nullable();
             $table->unsignedBigInteger('post_id');
+            $table->timestamp('timestamp');
 
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('comments');

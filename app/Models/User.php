@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
         'role_id',
         'is_baned',
+        'remember_token',
+        'resetToken'
     ];
 
     /**
@@ -57,11 +59,6 @@ class User extends Authenticatable
     public function followings()
     {
         return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'followed_id');
-    }
-
-    public function followers()
-    {
-        return $this->belongsToMany(User::class, 'user_follows', 'followed_id', 'follower_id');
     }
 
         public function following()
