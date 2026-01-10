@@ -3,39 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User_session;
+use App\Models\GameSession;
+use Storage;
 
 class SessionController extends Controller
 {
-    public function index()
-    {
-        $sessions = User_session::with('user')->get();
-        return response()->json($sessions);
-    }
-
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'session_token' => 'required|string',
-            'ip_address' => 'nullable|string|max:45',
+        $validated = $request->validate([
+            'data' => 'required|string',
+            'bestiary' => 'sometimes|string',
+            'imgs' => 'sometimes|array',
+            'DM' => 'sometimes|string',
         ]);
 
-        $session = User_session::create($data);
-        return response()->json(["data" => $session], 201);
-    }
+        $imagePaths = [];
 
+        if ($request->hasFile('imgs')) {
+            foreach ($request->file('imgs') as $file) {
+                $path = $file->store('public/session_img');
+                $imagePaths[] = Storage::url($path);
+            }
+        }
+
+        $validated['imgs'] = !empty($imagePaths) ? implode(',', $imagePaths) : null;
+
+        $session = GameSession::create($validated);
+        return response()->json(['code' => 'success']);
+    }
     public function show($id)
     {
-        $session = User_session::findOrFail($id);
-        return response()->json(["data" => $session]);
+        $session = GameSession::find($id);
+        if (!$session) {
+            return response()->json(['code' => 'error'], 404);
+        }
+        return response()->json(['data' => $session], 200);
     }
+
+
 
     public function destroy($id)
     {
-        $session = User_session::findOrFail($id);
+        $session = GameSession::find($id);
+        if (!$session) {
+            return response()->json(['code' => 'error'], 404);
+        }
+
         $session->delete();
 
-        return response()->json(['code' => 'success']);
+        return response()->json(['code' => 'success'], 200);
     }
 }

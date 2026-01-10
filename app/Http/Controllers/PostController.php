@@ -13,17 +13,20 @@ class PostController extends Controller
 {
     public function store(Request $request)
     {
-        dd($request->all());
         $user = $request->user();
 
         $rules = [
             'title' => 'required|unique:posts',
             'payload_content' => 'required',
-            'tags' => 'nullable|array',
+            'tags' => 'nullable', 
+            'files' => 'nullable|array', 
+            'files.*' => 'file', 
         ];
-        $validator = Validator::make($request->all(), $rules, $messages = [
-            'required' => ':attribute обязательное поля',
+
+        $validator = Validator::make($request->all(), $rules, [
+            'required' => ':attribute обязательное поле',
             'unique' => ':attribute данное поле занято',
+            'file' => 'Файл должен быть файлом', 
         ]);
 
         if ($validator->fails()) {
@@ -32,14 +35,17 @@ class PostController extends Controller
             ], 422);
         }
 
-        $file = $request->file('files');
-        $randomName = Str::random(20);
+        $paths = [];
 
-        $extension = $file->getClientOriginalExtension();
-
-        $fileName = $randomName . '.' . $extension;
-
-        $path = $file->storeAs('post_file', $fileName);
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $randomName = Str::random(20);
+                $extension = $file->getClientOriginalExtension();
+                $fileName = $randomName . '.' . $extension;
+                $path = $file->storeAs('post_file', $fileName);
+                $paths[] = $path;
+            }
+        }
 
         $tagsInput = $request->input('tags');
 
@@ -51,9 +57,11 @@ class PostController extends Controller
             $tagsString = '';
         }
 
+        $filesString = !empty($paths) ? implode(',', $paths) : null;
+
         $Post = Post::create([
             'title' => $request->title,
-            'files' => $path,
+            'files' => $filesString,
             'content' => $request->payload_content,
             'tags' => $tagsString,
             'user_id' => $user->id,
