@@ -29,10 +29,10 @@ class FollowController extends Controller
     {
         $userId = Auth::user()->id;
         $user = User::find($userId);
-        $follow = $user->following;
+        $followings = $user->following()
+            ->select('users.id', 'users.name', 'users.ava')
+            ->get();
 
-        $names = $follow->pluck('name');
-
-        return response()->json(['data' => $names]);
+        return response()->json(['data' => $followings]);
     }
 }

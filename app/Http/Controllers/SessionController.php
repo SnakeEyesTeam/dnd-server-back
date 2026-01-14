@@ -12,9 +12,9 @@ class SessionController extends Controller
     {
         $validated = $request->validate([
             'data' => 'required|string',
-            'bestiary' => 'sometimes|string',
-            'imgs' => 'sometimes|array',
-            'DM' => 'sometimes|string',
+            'bestiary' => 'sometimes|nullable|string',
+            'imgs' => 'sometimes|nullable|array',
+            'DM' => 'sometimes|nullable|string',
         ]);
 
         $imagePaths = [];

@@ -17,10 +17,9 @@ use App\Http\Controllers\ComentController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::post('/profile/{id}/ban-action', [ProfileController::class, 'banAction']);
-        Route::resource('/session/map', EntityController::class);
     });
     Route::middleware('is-banned')->group(function () {
-        Route::resource('/map', MapController::class);
+        Route::resource('/session/map', MapController::class);
 
         Route::resource('/forum/comment', ComentController::class);
 
@@ -30,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile/followers', [FollowController::class, 'index']);
         Route::get('/profile/me', [ProfileController::class, 'view']);
         Route::post('/profile/{id}/follow', [FollowController::class, 'follow']);
-        Route::post('/profile/update', [UserControler::class, 'update']);
+        Route::post('/profile/update', [ProfileController::class, 'update']);
 
         Route::post('/forum/{id}/like-action', [PostController::class, 'likeAction']);
         Route::post('/forum/{id}/my-like', [PostController::class, 'isLike']);

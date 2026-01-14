@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'jopan.19@mail.ru',
                 'password' => Hash::make('11111111D'),
                 'role_id' => 1,
+                
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'jopan1.19@mail.ru',
                 'password' => Hash::make('11111111D'),
                 'role_id' => 2,
+                
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -47,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'jopan2.19@mail.ru',
                 'password' => Hash::make('11111111D'),
                 'role_id' => 3,
+                
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->boolean("is_baned")->default(false);
             $table->rememberToken();
             $table->timestamps();
-            $table->string('ava',250)->nullable();
+            $table->string('ava',250)->default('default.jpg');
             $table->string('resetToken')->nullable();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
