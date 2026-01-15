@@ -144,17 +144,13 @@ class ProfileController extends Controller
         }
     }
 
-    public function index()
+    public function index($id)
     {
-        return response()->json(["data" => User::where('id', Auth::user()->id)->get()]);
+        return response()->json([User::select(['id', 'ava', 'name', 'is_baned as ban'])->find($id)]);
     }
 
     public function resetPassword(Request $request)
     {
-        // $request->validate([
-        //     'email' => 'required|email',
-        // ], $request->all());
-
         $user = User::where('email', $request->email)->first();
 
 
@@ -178,16 +174,23 @@ class ProfileController extends Controller
         return response()->json(["data" => post::where('user_id', Auth::user()->id)->get()]);
     }
 
-    public function banReason(Request $request)
+    public function banReason($id)
     {
-        $reason = Ban::where('user_id', $request->id)->first();
-        $AdminName = User::where('id', $reason->admin_id)->value("name");
-        return response()->json([
-            'nameAdmin' => $AdminName,
-            'reason' => $reason->reason,
-            'unbanTime' => $reason->unban_time,
-            'banTime' => $reason->ban_time
-        ]);
+        $reason = Ban::where('user_id', $id)->first();
+
+        if ($reason) {
+
+            $AdminName = User::where('id', $reason->admin_id)->first()->name;
+
+            return response()->json([
+                'nameAdmin' => $AdminName,
+                'reason' => $reason->reason,
+                'unbanTime' => $reason->unban_time,
+                'banTime' => $reason->ban_time
+            ]);
+        }
+
+        return response()->json('no');
     }
 
     public function view()
@@ -198,11 +201,26 @@ class ProfileController extends Controller
         if ($user) {
             return response()->json([
                 'name' => $user->name,
-                'email' => $user->email,
                 'ava' => $user->ava,
+                'id' => $user->id,
+                'role' => $user->role_id
             ]);
         } else {
             return response()->json(['code' => 'error'], 404);
         }
+    }
+
+    public function userPosts($id)
+    {
+        $posts = Post::select(['id', 'description', 'title', 'user_id', 'tags', 'departament_id as department'])->where('user_id', $id)->get();
+        $finaldata = [];
+        foreach ($posts as $post) {
+            $finaldata[] = array_merge(
+                $post->toArray(),
+                ['user' => ['name' => $post->user->name]]
+            );
+        }
+
+        return response()->json($finaldata);
     }
 }

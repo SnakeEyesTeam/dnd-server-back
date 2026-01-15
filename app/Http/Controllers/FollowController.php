@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\User;
+use DB;
 
 class FollowController extends Controller
 {
@@ -27,12 +28,18 @@ class FollowController extends Controller
     }
     public function index()
     {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $user = User::find(Auth::user()->id);
         $followings = $user->following()
             ->select('users.id', 'users.name', 'users.ava')
             ->get();
 
         return response()->json($followings);
+    }
+
+    public function myFollow($id)
+    {
+        return DB::table('user_follows')
+            ->where('follower_id', )
+            ->where('followed_id', $id)->first();
     }
 }
