@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
         $roles = [
             ['name' => 'user'],
             ['name' => 'admin'],
-            ['name' => 'moder'],
         ];
 
         foreach ($roles as $role) {
@@ -48,7 +47,6 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Sanek2',
                 'email' => 'jopan2.19@mail.ru',
                 'password' => Hash::make('11111111D'),
-                'role_id' => 3,
                 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -60,7 +58,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $departaments = [
-            ['name' => 'Dnd', 'img' => 'dnd.png','fixed_post'=>1],
+            ['name' => 'D&d', 'img' => 'D&d.png','fixed_post'=>1],
             ['name' => 'Web', 'img' => 'dnd.png','fixed_post'=>2],
             ['name' => 'Прочее', 'img' => 'dnd.png','fixed_post'=>1],
         ];

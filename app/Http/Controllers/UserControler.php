@@ -20,11 +20,17 @@ class UserControler extends Controller
                 'required',
                 'min:8',
                 'regex:/^(?=.*[A-Za-z])(?=.*\d).+$/',
-                'confirmed',
+                // 'confirmed',
+            ],
+            'confirmPassword' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[A-Za-z])(?=.*\d).+$/',
+                // 'confirmed',
             ]
         ];
         $validator = Validator::make($request->all(), $rules, $messages = [
-            'required' => ':attribute обязательное поля',
+            'required' => ':attribute - обязательное поля',
             'unique' => ':attribute данное поле занято',
             'email' => ':attribute поле должен содержать существующую почту',
             'password' => 'Пароль должен содержать минимум 8 символов, а так же иметь 1 букву и 1 цифру'
@@ -33,19 +39,25 @@ class UserControler extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
-            ], 422);
+            ], 400);
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => 1,
-        ]);
+        $user = User::create(
+            array_merge(
+                [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ],
+                [
+                    'password' => Hash::make($request->password),
+                    'role_id' => 1,
+                ]
+            )
+        );
 
         $token = $user->createToken($request->name)->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token], 200);
     }
 
 
@@ -64,10 +76,10 @@ class UserControler extends Controller
 
     public function auth(Request $request)
     {
-        $loginOrEmail = $request->input('name');
+        $nameOrEmail = $request->input('nameOrEmail');
 
-        $user = User::where('email', $loginOrEmail)
-            ->orWhere('name', $loginOrEmail)
+        $user = User::where('email', $nameOrEmail)
+            ->orWhere('name', $nameOrEmail)
             ->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -76,7 +88,7 @@ class UserControler extends Controller
 
         $token = $user->createToken('token')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token], 200);
     }
 
     public function index(Request $request)
@@ -85,7 +97,7 @@ class UserControler extends Controller
         $skip = (int) $request->input('skip', 0);
         $take = (int) $request->input('take', 10);
 
-        $usersQuery = User::query();
+        $usersQuery = User::query()->select(['name', 'ava', 'id']);
 
         if ($search) {
             $usersQuery->where(function ($q) use ($search) {
@@ -96,6 +108,6 @@ class UserControler extends Controller
 
         $users = $usersQuery->skip($skip)->take($take)->get();
 
-        return response()->json(['data' => $users]);
+        return response()->json(['data' => $users, 'isEnd' => $usersQuery->count() >= $skip]);
     }
 }

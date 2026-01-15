@@ -25,6 +25,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
     })
+    // Source - https://stackoverflow.com/a
+// Posted by Madusha Prasad
+// Retrieved 2026-01-14, License - CC BY-SA 4.0
+
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('api', \Illuminate\Http\Middleware\HandleCors::class);
+    })
+
 
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -33,6 +33,6 @@ class FollowController extends Controller
             ->select('users.id', 'users.name', 'users.ava')
             ->get();
 
-        return response()->json(['data' => $followings]);
+        return response()->json($followings);
     }
 }

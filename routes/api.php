@@ -49,9 +49,10 @@ Route::post('/profile/change-password', [ProfileController::class, 'changePasswo
 Route::post('/profile/reset-password', [ProfileController::class, 'resetPassword']);
 
 Route::get('/users', [UserControler::class, "index"]);
-Route::get(' /forum/{id}/departament', [DepartamentController::class, "show"]);
+Route::get('/forum/{id}/department', [DepartamentController::class, "show"]);
+Route::get('/forum/{id}/department/fixed', [DepartamentController::class, "fixed"]);
 
-Route::get('/forum/departaments', [DepartamentController::class, 'index']);
+Route::get('/forum/departments', [DepartamentController::class, 'index']);
 Route::get('/forum/{id}/post', [PostController::class, 'index']);
 
 Route::post('/registration', [UserControler::class, 'store']);
