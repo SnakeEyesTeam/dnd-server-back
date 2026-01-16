@@ -38,8 +38,8 @@ class FollowController extends Controller
 
     public function myFollow($id)
     {
-        return DB::table('user_follows')
+        return response()->json(DB::table('user_follows')
             ->where('follower_id', )
-            ->where('followed_id', $id)->first();
+            ->where('followed_id', $id)->first());
     }
 }

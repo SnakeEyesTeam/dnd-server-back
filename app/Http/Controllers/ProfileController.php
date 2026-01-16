@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\GameSession;
 use Validator;
 
 use App\Models\Ban;
@@ -200,10 +201,12 @@ class ProfileController extends Controller
 
         if ($user) {
             return response()->json([
-                'name' => $user->name,
-                'ava' => $user->ava,
-                'id' => $user->id,
-                'role' => $user->role_id
+                [
+                    'name' => $user->name,
+                    'ava' => $user->ava,
+                    'id' => $user->id,
+                    'role' => $user->role_id
+                ]
             ]);
         } else {
             return response()->json(['code' => 'error'], 404);
@@ -222,5 +225,10 @@ class ProfileController extends Controller
         }
 
         return response()->json($finaldata);
+    }
+
+    public function userSessions($id)
+    {
+        return response()->json(GameSession::where('DM', $id));
     }
 }
