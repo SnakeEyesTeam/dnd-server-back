@@ -10,25 +10,40 @@ class ComentController extends Controller
 {
     public function show(string $id)
     {
-        return response()->json(["data" => Comment::where("post_id", $id)->all()]);
+        $comments = Comment::where("post_id", $id)->orderByDesc('created_at')->get();
+        $finaldata = [];
+
+        foreach ($comments as $comment) {
+            $finaldata[] = array_merge(
+                $comment->toArray(),
+                ['user' => $comment->user]
+            );
+        }
+
+        return response()->json($finaldata);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $file = $request->file('files');
-        $randomName = Str::random(20);
+        // $file = $request->file('files');
+        // $randomName = Str::random(20);
 
-        $extension = $file->getClientOriginalExtension();
+        // $extension = $file->getClientOriginalExtension();
 
-        $fileName = $randomName . '.' . $extension;
+        // $fileName = $randomName . '.' . $extension;
 
-        $path = $file->storeAs('comment_file', $fileName);
+        // $path = $file->storeAs('comment_file', $fileName);
 
-        Comment::create([
+        $comment = Comment::create([
             'content' => $request->payload_content,
-            'files' => $path,
-            'post_id' => $request->post_id
+            'post_id' => $id,
+            'user_id' => auth()->user()->id
         ]);
+
+        return response()->json(array_merge(
+            $comment->toArray(),
+            ['user' => auth()->user()]
+        ), 200);
     }
 
 
@@ -37,6 +52,9 @@ class ComentController extends Controller
         Comment::where('id', $id)->update([
             'content' => $request->payload_content
         ]);
+        $comment = Comment::find($id);
+
+        return response()->json(array_merge($comment->toArray(), ['user' => $comment->user]), 200);
     }
 
 

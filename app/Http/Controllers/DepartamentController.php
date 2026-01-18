@@ -11,11 +11,12 @@ class DepartamentController extends Controller
 {
     public function fixed($id)
     {
-        $post = Post::select(['title', 'id', 'tags', 'description', 'user_id'])->where('departament_id', $id)->first();
+        $post = Post::select(['title', 'id', 'tags', 'description', 'user_id', 'departament_id'])->where('departament_id', $id)->first();
         return response()->json([
             array_merge(
                 $post->toArray(),
-                ['user' => $post->user]
+                ['user' => $post->user],
+                ['department' => $post->department->name],
             )
         ]);
     }
@@ -43,7 +44,8 @@ class DepartamentController extends Controller
 
     public function show($id, Request $request)
     {
-        $query = Post::where('departament_id', $id);
+        $query = Post::where('departament_id', $id)->orderByDesc('created_at');
+        $count = Post::where('departament_id', $id)->count();
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -72,15 +74,16 @@ class DepartamentController extends Controller
         $skip = (int) $request->input('skip', 0);
         $take = (int) $request->input('take', 10);
 
-        $posts = $query->select(['id', 'title', 'description', 'tags', 'user_id'])->skip($skip)->take($take)->get();
+        $posts = $query->select(['id', 'title', 'description', 'tags', 'user_id', 'departament_id'])->skip($skip)->take($take)->get();
         $finaldata = [];
         foreach ($posts as $post) {
             $finaldata[] = array_merge(
                 $post->toArray(),
-                ['user' => ['name' => $post->user->name]]
+                ['user' => ['name' => $post->user->name]],
+                ['department' => $post->department->name],
             );
         }
 
-        return response()->json(['data' => $finaldata, 'isEnd' => $query->count() <= $skip + $take]);
+        return response()->json(['data' => $finaldata, 'isEnd' => $count <= $skip + $take]);
     }
 }

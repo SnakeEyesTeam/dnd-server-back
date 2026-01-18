@@ -23,13 +23,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/profile/{id}/ban-action', [ProfileController::class, 'banAction']);
     });
     Route::middleware('is-banned')->group(function () {
-        Route::resource('/forum/comment', ComentController::class);
+        // Route::resource('/forum/comment', ComentController::class);
+        Route::post('/forum/{id}/comment/create', [ComentController::class, 'store']);
+        Route::patch('/forum/{id}/comment/update', [ComentController::class, 'update']);
+        Route::delete('/forum/{id}/comment/delete', [ComentController::class, 'destroy']);
         Route::post('/profile/{id}/follow', [FollowController::class, 'follow']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
 
         Route::post('/forum/{id}/like-action', [PostController::class, 'likeAction']);
         Route::post('/forum/create/post', [PostController::class, 'store']);
-        Route::get('/forum/{id}/delete', [PostController::class, 'destroy']);
+        Route::delete('/forum/{id}/delete', [PostController::class, 'destroy']);
 
         Route::resource('/session', SessionController::class);
         Route::resource('/session/map', MapController::class);
@@ -38,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
+Route::get('/forum/{id}/comments', [ComentController::class, 'show']);
 Route::get('/profile/{id}/info', [ProfileController::class, 'index']);
 Route::get('/profile/{id}/posts', [ProfileController::class, 'userPosts']);
 Route::get('/profile/{id}/sessions', [ProfileController::class, 'userSessions']);

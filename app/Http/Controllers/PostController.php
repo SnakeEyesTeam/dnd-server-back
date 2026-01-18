@@ -16,23 +16,23 @@ class PostController extends Controller
         $user = $request->user();
 
         $rules = [
-            'title' => 'required|unique:posts',
+            'title' => 'required',
             'payload_content' => 'required',
-            'tags' => 'nullable', 
-            'files' => 'nullable|array', 
-            'files.*' => 'file', 
+            'tags' => 'nullable',
+            'files' => 'nullable|array',
         ];
 
         $validator = Validator::make($request->all(), $rules, [
             'required' => ':attribute обязательное поле',
-            'unique' => ':attribute данное поле занято',
-            'file' => 'Файл должен быть файлом', 
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'code' => $validator->errors()
-            ], 422);
+            return response()->json(
+                [
+                    'errors' => $validator->errors()
+                ],
+                400
+            );
         }
 
         $paths = [];
@@ -59,22 +59,23 @@ class PostController extends Controller
 
         $filesString = !empty($paths) ? implode(',', $paths) : null;
 
-        $Post = Post::create([
+        Post::create([
             'title' => $request->title,
             'files' => $filesString,
             'content' => $request->payload_content,
+            'description' => $request->description,
             'tags' => $tagsString,
             'user_id' => $user->id,
-            'departament_id' => $request->Did,
+            'departament_id' => $request->department,
         ]);
 
-        return response()->json(['code' => 'success']);
+        return response()->json([], 200);
     }
-    public function index(Request $request)
+    public function index($id)
     {
-        $posts = Post::where("id", $request->id)->get();
+        $post = Post::find($id);
 
-        return response()->json(["data" => $posts, 'code' => 'success']);
+        return response()->json([array_merge($post->toArray(), ['user' => $post->user], ['likes' => Like::where('post_id', $id)->count()])]);
     }
 
     public function destroy(string $id)
@@ -89,9 +90,9 @@ class PostController extends Controller
 
         if ($post->user_id === $user->id || $user->role_id === 2) {
             $post->delete();
-            return response()->json(["code" => 'success']);
+            return response()->json([], 200);
         } else {
-            return response()->json(["code" => 'error'], 403);
+            return response()->json([], 403);
         }
     }
 

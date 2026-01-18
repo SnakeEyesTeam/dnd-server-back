@@ -25,23 +25,23 @@ class Unban extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
-    {
-        \Log::info('Запуск команды Unban: ' . now());
-        $nowTime = now();
+    // public function handle()
+    // {
+    //     \Log::info('Запуск команды Unban: ' . now());
+    //     $nowTime = now();
 
-        $UserBans = Ban::where('unban_time', '<=', $nowTime)->get();
+    //     $UserBans = Ban::where('unban_time', '<=', $nowTime)->get();
 
-        foreach ($UserBans as $ban) {
+    //     foreach ($UserBans as $ban) {
 
-            $user = User::find($ban->Uid);
-            if ($user) {
-                $user->is_baned = 0;
-                $user->Bid = null;
-                $user->save();
+    //         $user = User::find($ban->Uid);
+    //         if ($user) {
+    //             $user->is_baned = 0;
+    //             $user->Bid = null;
+    //             $user->save();
 
-                $ban->delete();
-            }
-        }
-    }
+    //             $ban->delete();
+    //         }
+    //     }
+    // }
 }

@@ -11,6 +11,12 @@ class Comment extends Model
         'id',
         'content',
         'files',
-        'post_id'
+        'post_id',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
