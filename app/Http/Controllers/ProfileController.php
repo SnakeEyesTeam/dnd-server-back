@@ -69,15 +69,23 @@ class ProfileController extends Controller
 
         if ($request->hasFile('ava')) {
             $imageName = Str::random(32) . "." . $request->ava->getClientOriginalExtension();
-            $user->update(['ava' => $imageName]);
             Storage::disk('public')->put($imageName, file_get_contents($request->ava));
-            return response()->json(['data' => $user]);
+
+            $user->update([
+                'ava' => $imageName,
+                'name' => $request->input('name'),
+            ]);
+
+            return response()->json([
+                'ava' => $imageName,
+                'name' => $request->input('name'),
+            ], 201);
         } else {
             $user->update([
-                'name' => $request->input('name'),
-                'email' => $request->input('email')
+                'name' => $request->input('name')
             ]);
-            return response()->json(['data' => $user]);
+
+            return response()->json(['name' => $request->input('name')], 200);
         }
     }
 

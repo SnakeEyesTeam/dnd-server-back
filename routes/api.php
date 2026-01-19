@@ -18,7 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/followers', [FollowController::class, 'index']);
     Route::get('/profile/me', [ProfileController::class, 'view']);
     Route::get('/profile/{id}/my-follow', [FollowController::class, 'myFollow']);
-    Route::post('/forum/{id}/my-like', [PostController::class, 'isLike']);
+    Route::get('/forum/{id}/my-like', [PostController::class, 'isLike']);
     Route::middleware('role:admin')->group(function () {
         Route::post('/profile/{id}/ban-action', [ProfileController::class, 'banAction']);
     });

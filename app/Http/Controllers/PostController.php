@@ -110,10 +110,10 @@ class PostController extends Controller
                 'post_id' => $postId,
                 'user_id' => $userId,
             ]);
-            return response()->json(['message' => 'Лайк добавлен']);
+            return response()->json([], 200);
         } else {
             $existingLike->delete();
-            return response()->json(['message' => 'Лайк удален']);
+            return response()->json([], 200);
         }
     }
     public function isLike($postId)
@@ -123,9 +123,9 @@ class PostController extends Controller
             ->first();
 
         if ($like) {
-            return response()->json(['data' => true]);
+            return response()->json([true]);
         } else {
-            return response()->json(['data' => false]);
+            return response()->json([false]);
         }
     }
 }
