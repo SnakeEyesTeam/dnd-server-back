@@ -12,13 +12,13 @@ class DepartamentController extends Controller
     public function fixed($id)
     {
         $post = Post::select(['title', 'id', 'tags', 'description', 'user_id', 'departament_id'])->where('departament_id', $id)->first();
-        return response()->json([
+        return response()->json(
             array_merge(
                 $post->toArray(),
                 ['user' => $post->user],
                 ['department' => $post->department->name],
             )
-        ]);
+        );
     }
     //
     public function index()

@@ -69,13 +69,13 @@ class PostController extends Controller
             'departament_id' => $request->department,
         ]);
 
-        return response()->json([], 200);
+        return response()->json(null, 200);
     }
     public function index($id)
     {
         $post = Post::find($id);
 
-        return response()->json([array_merge($post->toArray(), ['user' => $post->user], ['likes' => Like::where('post_id', $id)->count()])]);
+        return response()->json(array_merge($post->toArray(), ['user' => $post->user], ['likes' => Like::where('post_id', $id)->count()]));
     }
 
     public function destroy(string $id)
@@ -90,9 +90,9 @@ class PostController extends Controller
 
         if ($post->user_id === $user->id || $user->role_id === 2) {
             $post->delete();
-            return response()->json([], 200);
+            return response()->json(null, 200);
         } else {
-            return response()->json([], 403);
+            return response()->json(null, 403);
         }
     }
 
@@ -110,10 +110,10 @@ class PostController extends Controller
                 'post_id' => $postId,
                 'user_id' => $userId,
             ]);
-            return response()->json([], 200);
+            return response()->json(null, 200);
         } else {
             $existingLike->delete();
-            return response()->json([], 200);
+            return response()->json(null, 200);
         }
     }
     public function isLike($postId)
@@ -123,9 +123,9 @@ class PostController extends Controller
             ->first();
 
         if ($like) {
-            return response()->json([true]);
+            return response()->json(true);
         } else {
-            return response()->json([false]);
+            return response()->json(false);
         }
     }
 }

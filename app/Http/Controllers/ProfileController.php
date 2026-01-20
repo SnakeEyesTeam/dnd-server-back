@@ -155,7 +155,7 @@ class ProfileController extends Controller
 
     public function index($id)
     {
-        return response()->json([User::select(['id', 'ava', 'name', 'is_baned as ban'])->find($id)]);
+        return response()->json(User::select(['id', 'ava', 'name', 'is_baned as ban'])->find($id));
     }
 
     public function resetPassword(Request $request)
@@ -178,10 +178,6 @@ class ProfileController extends Controller
 
         return response()->json(['code' => 'success.'], 200);
     }
-    public function show(Request $request)
-    {
-        return response()->json(["data" => post::where('user_id', Auth::user()->id)->get()]);
-    }
 
     public function banReason($id)
     {
@@ -199,7 +195,7 @@ class ProfileController extends Controller
             ]);
         }
 
-        return response()->json('no');
+        return response()->json(null);
     }
 
     public function view()
@@ -208,14 +204,14 @@ class ProfileController extends Controller
         $user = User::find($userId);
 
         if ($user) {
-            return response()->json([
+            return response()->json(
                 [
                     'name' => $user->name,
                     'ava' => $user->ava,
                     'id' => $user->id,
                     'role' => $user->role_id
                 ]
-            ]);
+            );
         } else {
             return response()->json(['code' => 'error'], 404);
         }

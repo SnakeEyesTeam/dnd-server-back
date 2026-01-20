@@ -11,7 +11,7 @@ class MapController extends Controller
     {
         $maps = Map::all();
 
-        return response()->json(["data" => $maps]);
+        return response()->json($maps);
     }
     public function store(Request $request)
     {
@@ -24,7 +24,7 @@ class MapController extends Controller
 
         $map = Map::create($validated);
 
-        return response()->json(["data" => $map], 201);
+        return response()->json($map, 201);
     }
 
     public function destroy(string $id)

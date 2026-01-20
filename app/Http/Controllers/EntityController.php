@@ -12,7 +12,7 @@ class EntityController extends Controller
     {
         $entities = Entity::all();
 
-        return response()->json(["data" => $entities]);
+        return response()->json($entities);
     }
 
     public function store(Request $request)
@@ -29,7 +29,7 @@ class EntityController extends Controller
 
         $entity = Entity::create($validated);
 
-        return response()->json(["data" => $entity], 201);
+        return response()->json($entity, 201);
     }
 
     public function destroy(string $id)

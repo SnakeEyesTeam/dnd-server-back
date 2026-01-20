@@ -24,14 +24,6 @@ class ObjectController extends Controller
 
         $object = MapObject::create($validated);
 
-        return response()->json(["data" => $object], 201);
-    }
-
-    public function destroy($id)
-    {
-        $object = MapObject::findOrFail($id);
-        $object->delete();
-
-        return response()->json(null, 204);
+        return response()->json($object, 201);
     }
 }
