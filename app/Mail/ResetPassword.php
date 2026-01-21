@@ -22,15 +22,15 @@ class ResetPassword extends Mailable
 
     public function build()
     {
-        $resetUrl = URL::route('template', [
-            'token' => $this->token,
-            'email' => urlencode($this->email)
-        ]);
+        // $resetUrl = URL::route('template', [
+        //     'token' => $this->token,
+        //     'email' => urlencode($this->email)
+        // ]);
 
         return $this->subject('Восстановление пароля')
             ->view('templates.reset-password')
             ->with([
-                'resetUrl' => $resetUrl,
+                'resetUrl' => 'http://localhost:5173/change-password?token=' . $this->token,
             ]);
     }
 }

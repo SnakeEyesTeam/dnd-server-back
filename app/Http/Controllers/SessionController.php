@@ -5,42 +5,43 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GameSession;
 use Storage;
+use Str;
 
 class SessionController extends Controller
 {
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'data' => 'required|string',
-            'bestiary' => 'sometimes|nullable|string',
-            'imgs' => 'sometimes|nullable|array',
-            'DM' => 'sometimes|nullable|string',
+            'name' => 'required|string',
+            'path' => 'required|string',
         ]);
+        $data = Str::random(32) . ".json";
+        $bestiary = Str::random(32) . ".json";
+        Storage::disk('public')->put($data, json_encode(["DM" => auth()->user()]));
+        Storage::disk('public')->put($bestiary, json_encode([[]]));
+        error_log($validated['name']);
+        error_log($validated['path']);
 
-        $imagePaths = [];
-
-        if ($request->hasFile('imgs')) {
-            foreach ($request->file('imgs') as $file) {
-                $path = $file->store('public/session_img');
-                $imagePaths[] = Storage::url($path);
-            }
-        }
-
-        $validated['imgs'] = !empty($imagePaths) ? implode(',', $imagePaths) : null;
-
-        $session = GameSession::create($validated);
-        return response()->json(['code' => 'success']);
+        $session = GameSession::create(array_merge(
+            $validated,
+            [
+                "DM" => auth()->user()->id,
+                'data' => $data,
+                "bestiary" => $bestiary
+            ],
+        ));
+        return response()->json($session, 201);
     }
     public function show($id)
     {
-        $session = GameSession::find($id);
+        $session = GameSession::select(['data', 'id', 'bestiary'])->find($id);
+
         if (!$session) {
-            return response()->json(['code' => 'error'], 404);
+            return response()->json(null, 404);
         }
-        return response()->json(['data' => $session], 200);
+
+        return response()->json($session, 200);
     }
-
-
 
     public function destroy($id)
     {

@@ -113,11 +113,18 @@ class ProfileController extends Controller
         }
 
         if (isTimeExceeded($request->token)) {
-            $userId = $request->user_id;
-            User::where('id', $userId)->update(['password' => Hash::make($request->password), 'resetToken' => null]);
-            return response()->json(["code" => "success"]);
+            $userId = User::where('resetToken', $request->token)->first();
+            User::where('id', $userId)->update(
+                [
+                    'password' => Hash::make($request->password),
+                    'resetToken' => null
+                ]
+            );
+
+            return response()->json(null, 200);
         }
-        return response()->json(["code" => "error"]);
+
+        return response()->json(null, 400);
     }
 
 
@@ -176,7 +183,7 @@ class ProfileController extends Controller
 
         Mail::to($request->email)->send(new \App\Mail\ResetPassword($token, $user->email));
 
-        return response()->json(['code' => 'success.'], 200);
+        return response()->json(null, 200);
     }
 
     public function banReason($id)
@@ -233,6 +240,10 @@ class ProfileController extends Controller
 
     public function userSessions($id)
     {
-        return response()->json(GameSession::where('DM', $id));
+        $sessions = GameSession::where("DM", $id)->get();
+        if (!$sessions) {
+            return response()->json(null, 404);
+        }
+        return response()->json($sessions, 200);
     }
 }

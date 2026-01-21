@@ -17,5 +17,10 @@ class Entity extends Model
         'source_id'
     ];
 
+    public function source()
+    {
+        return $this->belongsTo(Source::class, 'source_id');
+    }
+
     public $timestamps = false;
 }

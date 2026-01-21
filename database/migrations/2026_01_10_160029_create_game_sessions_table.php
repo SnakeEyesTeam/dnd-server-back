@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->string("data");
             $table->string("bestiary");
-            $table->string("imgs");
+            $table->string("imgs")->default('');
             $table->unsignedBigInteger("DM");
             $table->timestamps();
+            $table->string('name');
+            $table->string('path');
 
             $table->foreign('DM')->references('id')->on('users')->onDelete('cascade');
         });

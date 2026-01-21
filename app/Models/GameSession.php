@@ -12,6 +12,8 @@ class GameSession extends Model
         'data',
         'bestiary',
         'imgs',
-        'DM'
+        'DM',
+        'name',
+        'path'
     ];  
 }
