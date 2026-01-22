@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Entity;
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class EntityController extends Controller
 {
@@ -33,15 +35,22 @@ class EntityController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'path' => 'nullable|string',
-            'iniciative' => 'nullable|string',
-            'discription' => 'nullable|string',
-            'size' => 'nullable|string',
-            'user_id' => 'sometimes|integer',
-            'source_id' => 'sometimes|integer'
+            'initiative' => 'nullable|string',
+            'description' => 'nullable|string',
         ]);
+        if ($request->hasFile('img')) {
+            $imageName = Str::random(32) . "." . $request->img->getClientOriginalExtension();
+            Storage::disk('public')->put($imageName, file_get_contents($request->img));
+        }
 
-        $entity = Entity::create($validated);
+        $entity = Entity::create(
+            array_merge(
+                $validated,
+                ['path' => $imageName],
+                ['source_id' => 1],
+                ['user_id' => auth()->user()->id]
+            )
+        );
 
         return response()->json($entity, 201);
     }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->mediumInteger("iniciative");
-            $table->string("discription");
-            $table->bigInteger('size');
+            $table->string("description");
+            $table->bigInteger('size')->default(1);
             $table->unsignedBigInteger("user_id")->nullable();
             $table->unsignedBigInteger('source_id');
 

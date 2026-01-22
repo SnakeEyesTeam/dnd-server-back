@@ -10,8 +10,8 @@ class Entity extends Model
     protected $fillable = [
         'name',
         'path',
-        'iniciative',
-        'discription',
+        'initiative',
+        'description',
         'size',
         'user_id',
         'source_id'

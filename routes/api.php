@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::resource('/session', SessionController::class);
         Route::get('/session/{id}', [SessionController::class, 'show']);
+        Route::post('/s/push-img', [SessionController::class, 'pushImg']);
 
         Route::resource('/session/map', MapController::class);
         Route::resource('/session/entity', EntityController::class);

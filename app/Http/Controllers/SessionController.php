@@ -49,9 +49,19 @@ class SessionController extends Controller
         if (!$session) {
             return response()->json(['code' => 'error'], 404);
         }
-
         $session->delete();
 
         return response()->json(['code' => 'success'], 200);
+    }
+
+    public function pushImg(Request $request)
+    {
+        if ($request->hasFile('img')) {
+            $imageName = Str::random(32) . "." . $request->img->getClientOriginalExtension();
+            Storage::disk('public')->put($imageName, file_get_contents($request->img));
+
+            return response()->json($imageName, 201);
+        }
+        return response()->json(null, 400);
     }
 }

@@ -14,4 +14,9 @@ class Map extends Model
         'user_id',
         'source_id'
     ];
+
+    public function source()
+    {
+        return $this->belongsTo(Source::class, 'source_id');
+    }
 }
