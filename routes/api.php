@@ -86,3 +86,14 @@ Route::post('/logout', [UserControler::class, 'logout']);
 Route::get('/server', function () {
     return true;
 });
+
+
+Route::get('/static/{path}/', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+
+    if (!file_exists($filePath)) {
+        return response()->json(null, 404);
+    }
+
+    return response()->file($filePath);
+})->where('filename', '.*\.(jpg|jpeg|png|gif)$');
