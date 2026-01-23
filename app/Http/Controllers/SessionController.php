@@ -46,12 +46,13 @@ class SessionController extends Controller
     public function destroy($id)
     {
         $session = GameSession::find($id);
+
         if (!$session) {
             return response()->json(['code' => 'error'], 404);
         }
         $session->delete();
 
-        return response()->json(['code' => 'success'], 200);
+        return response()->json(['id' => $session->id], 200);
     }
 
     public function pushImg(Request $request)

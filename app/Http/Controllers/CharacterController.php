@@ -2,63 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Character;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class CharacterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $characters = Character::where('user_id', $request->id)->get();
+
+        return response($characters, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'initiative' => 'string',
+        ]);
+        if ($request->hasFile('img')) {
+            $imageName = Str::random(32) . "." . $request->img->getClientOriginalExtension();
+            Storage::disk('public')->put($imageName, file_get_contents($request->img));
+
+            $character = Character::create(
+                array_merge(
+                    $validated,
+                    ['path' => $imageName],
+                    ['user_id' => auth()->user()->id]
+                )
+            );
+
+            return response()->json($character, 201);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $character = Character::find($request->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (!$character) {
+            return response()->json(['code' => 'error'], 404);
+        }
+        $character->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['id' => $character->id], 200);
     }
 }

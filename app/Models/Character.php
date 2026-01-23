@@ -10,9 +10,10 @@ class Character extends Model
     protected $fillable = [
         'id',
         'name',
-        'img',
+        'path',
         'initiative',
         'user_id'
     ];
+
     public $timestamps = false;
 }

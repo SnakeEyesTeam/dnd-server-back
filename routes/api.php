@@ -45,6 +45,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/session/map', MapController::class);
         Route::resource('/session/entity', EntityController::class);
         Route::resource('/session/object', ObjectController::class);
+        Route::post('/profile/create/character', [CharacterController::class, 'store']);
+        Route::delete('/profile/{id}/delete/character', [CharacterController::class, 'destroy']);
 
         Route::get('/s/maps', [MapController::class, 'index']);
         Route::get('/s/entities', [EntityController::class, 'index']);
@@ -56,7 +58,7 @@ Route::get('/forum/{id}/comments', [ComentController::class, 'show']);
 
 Route::get('/profile/{id}/info', [ProfileController::class, 'index']);
 Route::get('/profile/{id}/posts', [ProfileController::class, 'userPosts']);
-Route::get('/profile/{id}/characters', [ProfileController::class, 'userCharacters']);
+Route::get('/profile/{id}/characters', [CharacterController::class, 'index']);
 Route::get('/profile/{id}/sessions', [ProfileController::class, 'userSessions']);
 
 Route::post('/template', function () {
