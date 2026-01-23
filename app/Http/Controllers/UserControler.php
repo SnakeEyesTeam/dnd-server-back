@@ -101,13 +101,46 @@ class UserControler extends Controller
 
         if ($search) {
             $usersQuery->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%");
+                $q->where('name', 'like', "%$search%");
             });
         }
 
         $users = $usersQuery->skip($skip)->take($take)->get();
 
         return response()->json(['data' => $users, 'isEnd' => $usersQuery->count() >= $skip]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search', null);
+
+        if (!$search) {
+            return response()->json([], 200);
+        }
+        $usersQuery = User::query()->select(['name', 'ava', 'id']);
+        $usersQuery->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%$search%");
+        });
+        $users = $usersQuery->take(5)->get();
+
+        return response()->json($users, 200);
+    }
+
+    public function fromArray(Request $request)
+    {
+        $str = $request->input('users', null);
+        if ($str) {
+            $users = [];
+            $array = explode(',', $str);
+
+
+            foreach ($array as $value) {
+                $users[] = User::select('name', 'id', 'ava')->find($value);
+            }
+
+            return response()->json($users, 200);
+        }
+
+        return response()->json([], 200);
     }
 }
