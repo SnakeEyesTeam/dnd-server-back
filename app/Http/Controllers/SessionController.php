@@ -17,10 +17,6 @@ class SessionController extends Controller
         ]);
         $data = Str::random(32) . ".json";
         $bestiary = Str::random(32) . ".json";
-        Storage::disk('public')->put($data, json_encode(["DM" => auth()->user()]));
-        Storage::disk('public')->put($bestiary, json_encode([[]]));
-        error_log($validated['name']);
-        error_log($validated['path']);
 
         $session = GameSession::create(array_merge(
             $validated,
@@ -30,6 +26,19 @@ class SessionController extends Controller
                 "bestiary" => $bestiary
             ],
         ));
+        Storage::disk('public')->put($data, json_encode([
+            'id' => $session->id,
+            'name' => $session->name,
+            'currentMap' => null,
+            "DM" => auth()->user(),
+            'maps' => [],
+            'characters' => [],
+            'mapsData' => ['' => ''],
+            "imgs" => "",
+            'note' => '',
+            'users' => ''
+        ]));
+        Storage::disk('public')->put($bestiary, json_encode([]));
         return response()->json($session, 201);
     }
     public function show($id)
@@ -64,5 +73,12 @@ class SessionController extends Controller
             return response()->json($imageName, 201);
         }
         return response()->json(null, 400);
+    }
+
+    public function JSON(Request $request, $path)
+    {
+        Storage::disk('public')->put($path, json_encode($request->data));
+
+        return response()->json(null, 200);
     }
 }

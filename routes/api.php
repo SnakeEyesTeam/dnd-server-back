@@ -97,3 +97,5 @@ Route::get('/static/{path}/', function ($path) {
 
     return response()->file($filePath);
 })->where('filename', '.*\.(jpg|jpeg|png|gif)$');
+
+Route::post('/JSON/{path}/', [SessionController::class, 'JSON']);
