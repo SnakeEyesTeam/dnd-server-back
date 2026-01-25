@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('path');
+            $table->string('idInBestiary');
             $table->mediumInteger("iniciative");
             $table->string("description");
             $table->bigInteger('size')->default(1);

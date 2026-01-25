@@ -38,6 +38,7 @@ class EntityController extends Controller
             'initiative' => 'nullable|string',
             'description' => 'nullable|string',
         ]);
+        $idInBestiary = Str::random(16);
         if ($request->hasFile('img')) {
             $imageName = Str::random(32) . "." . $request->img->getClientOriginalExtension();
             Storage::disk('public')->put($imageName, file_get_contents($request->img));
@@ -47,6 +48,7 @@ class EntityController extends Controller
             array_merge(
                 $validated,
                 ['path' => $imageName],
+                ['idInBestiary' => $idInBestiary],
                 ['source_id' => 1],
                 ['user_id' => auth()->user()->id]
             )

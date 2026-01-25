@@ -12,6 +12,7 @@ class Entity extends Model
         'path',
         'initiative',
         'description',
+        'idInBestiary',
         'size',
         'user_id',
         'source_id'
