@@ -88,14 +88,5 @@ Route::get('/server', function () {
 });
 
 
-Route::get('/static/{path}/', function ($path) {
-    $filePath = storage_path('app/public/' . $path);
-
-    if (!file_exists($filePath)) {
-        return response()->json(null, 404);
-    }
-
-    return response()->file($filePath);
-})->where('filename', '.*\.(jpg|jpeg|png|gif)$');
-
+Route::get('/static/{path}/', [SessionController::class, 'static']);
 Route::post('/JSON/{path}/', [SessionController::class, 'JSON']);

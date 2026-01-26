@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->string('idInBestiary');
-            $table->mediumInteger("iniciative");
+            $table->mediumInteger("initiative");
             $table->string("description");
             $table->bigInteger('size')->default(1);
             $table->unsignedBigInteger("user_id")->nullable();

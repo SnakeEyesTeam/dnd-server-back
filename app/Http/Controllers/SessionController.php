@@ -81,4 +81,15 @@ class SessionController extends Controller
 
         return response()->json(null, 200);
     }
+
+    public function static($path)
+    {
+        $filePath = storage_path('app/public/' . $path);
+
+        if (!file_exists($filePath)) {
+            return response()->json(null, 404);
+        }
+
+        return response()->file($filePath);
+    }
 }
