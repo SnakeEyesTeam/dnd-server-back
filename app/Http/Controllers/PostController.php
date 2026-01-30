@@ -74,6 +74,9 @@ class PostController extends Controller
     public function index($id)
     {
         $post = Post::find($id);
+        if (!$post) {
+            return response()->json(null, 222);
+        }
 
         return response()->json(array_merge($post->toArray(), ['user' => $post->user], ['likes' => Like::where('post_id', $id)->count()]));
     }

@@ -207,8 +207,10 @@ class ProfileController extends Controller
 
     public function view()
     {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $user = User::find(Auth::user()->id);
+        if (!$user) {
+            return response()->json(null, 222);
+        }
 
         if ($user) {
             return response()->json(
