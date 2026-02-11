@@ -3,6 +3,7 @@
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\EntityController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\ObjectController;
@@ -87,6 +88,8 @@ Route::get('/server', function () {
     return true;
 });
 
+
+Route::post('/event', [EventController::class, 'throwEvent']);
 
 Route::get('/static/{path}/', [SessionController::class, 'static']);
 Route::post('/JSON/{path}/', [SessionController::class, 'JSON']);
