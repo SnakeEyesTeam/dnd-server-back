@@ -11,7 +11,7 @@ class EventController extends Controller
     //
     public function throwEvent(Request $request)
     {
-        // return response()->json($request->event);
         broadcast(new EventEvent($request->event));
+        return response()->json(true);
     }
 }

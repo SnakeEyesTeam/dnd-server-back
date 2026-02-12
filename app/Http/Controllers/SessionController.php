@@ -43,7 +43,7 @@ class SessionController extends Controller
     }
     public function show($id)
     {
-        $session = GameSession::select(['data', 'id', 'bestiary'])->find($id);
+        $session = GameSession::select(['data', 'id', 'bestiary', 'DM'])->find($id);
 
         if (!$session) {
             return response()->json(null, 404);
