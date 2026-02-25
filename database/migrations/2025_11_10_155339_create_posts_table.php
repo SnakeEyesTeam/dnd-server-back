@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string("content", 255);
             $table->string("tags")->nullable();
             $table->string("files")->nullable();
-            $table->string("description")->nullable();
+            $table->text("description")->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('departament_id');
             $table->timestamps();
