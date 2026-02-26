@@ -125,7 +125,37 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Гоблин'
             ],
             [
-                'name' => 'Именные'
+                'name' => 'Именные' // 13
+            ],
+            [
+                'name' => 'Мосты'
+            ],
+            [
+                'name' => 'Фермы'
+            ],
+            [
+                'name' => 'Лес'
+            ],
+            [
+                'name' => 'Внутренности'
+            ],
+            [
+                'name' => 'Пещеры'
+            ],
+            [
+                'name' => 'Горы'
+            ],
+            [
+                'name' => 'Дорога'
+            ],
+            [
+                'name' => 'Крепости'
+            ],
+            [
+                'name' => 'Города'
+            ],
+            [
+                'name' => 'Сооружения'
             ]
         ];
 
@@ -133,6 +163,137 @@ class DatabaseSeeder extends Seeder
             DB::table('sources')->insert($source);
         }
         ;
+
+        $bestiary12 = [
+            [
+                'name' => 'Чемпион',
+                'path' => '636332892671875353.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Пожилой берсерк',
+                'path' => '637006857082812774.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Берсерк',
+                'path' => '637357081603410076.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Сержант',
+                'path' => '638291908658286399.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Капитан стражи',
+                'path' => '638465563322875373.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Маг погоды',
+                'path' => '638512253966814822.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Юный лорд',
+                'path' => '638741964763404684.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Простолюдин',
+                'path' => '638386042591609241.webp',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Сержант',
+                'path' => '9c72575beda7f308ecec1bb70cfd3f74.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Стражник',
+                'path' => '834fbc8af4c5583de96cc2a41fbaedd2.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Авантюрист',
+                'path' => '5181c8f37cfbf2e3ae6e434728eb63b2.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Рыцарь',
+                'path' => '6ecff70d1ce8e09ac3471d7276ac4120.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Лорд',
+                'path' => '9b274a8e842747d7ea93f9ecbcc478dc.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 3
+            ],
+            [
+                'name' => 'Вампирский рыцарь',
+                'path' => 'b917fb885d1e89a5ce2cd6a9c99e6fcc.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 10
+            ],
+            [
+                'name' => 'Вампир',
+                'path' => '638741964775011927.png',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 10
+            ],
+            [
+                'name' => 'Дроу оруженосец',
+                'path' => 'da5e3ff7c8fcf0ae05c0e2f2ba1fb769.jpg',
+                'initiative' => 12,
+                'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
+                'idInBestiary' => 3,
+                'source_id' => 11
+            ],
+        ];
 
         $bestiary11 = [
             [
@@ -145,7 +306,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Бармен Уил',
-                'path' => '3008bd40ab7c81e8bc437e0d048b82a1 (1).jpg',
+                'path' => '3008bd40ab7c81e8bc437e0d048b82a1.jpg',
                 'initiative' => 12,
                 'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
                 'idInBestiary' => 3,
@@ -380,7 +541,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Великий лев',
-                'path' => 'i (1).webp',
+                'path' => 'zxczxc.webp',
                 'initiative' => 12,
                 'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
                 'idInBestiary' => 13,
@@ -492,7 +653,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Грифон',
-                'path' => 'griffin.webp',
+                'path' => 'griffin.jpg',
                 'initiative' => 12,
                 'description' => 'Козы неприхотливы, хорошо переносят как низкие, так и высокие температуры, однако плохо адаптируются к влажному климату.',
                 'idInBestiary' => 27,
@@ -1022,56 +1183,232 @@ class DatabaseSeeder extends Seeder
 
         $maps = [
             [
-                'name' => 'Пристань',
-                'path' => '0b47579f77760c65e29e8de00bb7628e.jpg',
-                'source_id' => 2
+                'name' => 'Мост с крепостью',
+                'path' => '67ce2ff0f7dfbff87d767d2c3da67662.jpg',
+                'source_id' => 14
             ],
             [
-                'name' => 'Лесной склон',
-                'path' => '4cbUc4BMJnMiNbXfC1oo1MJYGOrhXME-TQt69SjXFbr-8KDdS7KlwtVRc1dhP75zFaoLS6z7vqkNS7ayS18ulX7V.jpg',
-                'source_id' => 2
+                'name' => 'Мост над пропастью',
+                'path' => '87d2d57977b06640c6c729ddbc442652.jpg',
+                'source_id' => 14
+            ],
+            [
+                'name' => 'Снежный мост',
+                'path' => 'd527b4773637e9c4f49333843319d968.jpg',
+                'source_id' => 14
+            ],
+            [
+                'name' => 'Лесная поляна',
+                'path' => '8a86756b608618586cc145457363dbf2.jpg',
+                'source_id' => 16
+            ],
+            [
+                'name' => 'Обрыв с рекой',
+                'path' => '25a0babca7e4f1e4abe343932ef82789.jpg',
+                'source_id' => 16
+            ],
+            [
+                'name' => 'Лесная чаща',
+                'path' => '34a265e947f99aa56eda6a72b18bc534.jpg',
+                'source_id' => 16
+            ],
+            [
+                'name' => 'Побережье',
+                'path' => 'sadasdsad.jpg',
+                'source_id' => 16
+            ],
+            [
+                'name' => 'Подвал',
+                'path' => '03ee4d5051a58b29b2d851d02c9aff0b.jpg',
+                'source_id' => 17
+            ],
+            [
+                'name' => 'Башня',
+                'path' => '4f4de9950e496fb20defe0599700d64c.jpg',
+                'source_id' => 17
+            ],
+            [
+                'name' => 'Церковь',
+                'path' => '63c298a4851224daacd88dec22352cd8.jpg',
+                'source_id' => 17
             ],
             [
                 'name' => 'Таверна',
-                'path' => '6ba6ed48ea7eddbb120c6618fa398408.jpg',
-                'source_id' => 2
+                'path' => 'bc9895ecab2f2411a488730ac838ac40.jpg',
+                'source_id' => 17
             ],
             [
-                'name' => 'Площадь',
-                'path' => '8GmMCfKK1fOdSifW9IdoltAwyTJRc9ua1WDSwuAtAJxKN8G4sK4tf_47gHNLJ_NCa5GIVXBvMks-4-gHWcTJBKVA.jpg',
-                'source_id' => 2
+                'name' => 'Вход в пещеру',
+                'path' => '3aa3a24e14d822efd4e7f6171e1d7b6e.jpg',
+                'source_id' => 18
             ],
             [
-                'name' => 'Горный склон',
-                'path' => '1609163716170691326.webp',
-                'source_id' => 2
+                'name' => 'Шахта',
+                'path' => '46f73cae54aab14b61770b1c4df5728f.jpg',
+                'source_id' => 18
+            ],
+            [
+                'name' => 'Поворот в шахте',
+                'path' => '71464d63b6a94ce2f58894acd9a0229c.jpg',
+                'source_id' => 18
+            ],
+            [
+                'name' => 'Крепость у пещеры',
+                'path' => 'aaf674e469ad6b4a1e80ded92c65e2e3.jpg',
+                'source_id' => 18
+            ],
+            [
+                'name' => 'Обвал у пещеры',
+                'path' => 'd37a511d1f206af792394a1a137b1ab2.jpg',
+                'source_id' => 18
+            ],
+            [
+                'name' => 'Горы',
+                'path' => '793713da738f789571af6f08fc533a16.jpg',
+                'source_id' => 19
+            ],
+            [
+                'name' => 'Горное сооружение',
+                'path' => '90317033405eb60e1b4c8da0da0b0b38.jpg',
+                'source_id' => 19
+            ],
+            [
+                'name' => 'Тропа',
+                'path' => '1badf0727560fbf16851840c44569d2d.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Тропа на ферме',
+                'path' => '7c2d4eb7f8656a10691e37d6975fcb5f.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Весенняя тропа',
+                'path' => '428770959bd237354c173706b867897d.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Тропа у реки',
+                'path' => 'Autumn-River-Battlemap.webp',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Тропа',
+                'path' => 'ecb9935d20c2f6ea449a6b70560ea961.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Снежная тропа',
+                'path' => 'Snow-Forest-Road-Battlemap.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Болотная тропа',
+                'path' => 'SwampPathPublicJPG.jpg',
+                'source_id' => 20
+            ],
+            [
+                'name' => 'Лесная крепость',
+                'path' => '0c6e52949cce02c42604d27ea4726c6e.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Лесная блокпост',
+                'path' => '5d7577eef3960db5fd7e99321195f571.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Каменная крепость',
+                'path' => '6ebd3c6a97298303604a1056ee0c3ae2.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Крепость',
+                'path' => '6fd1d3f45b1f8eb6236d7d9ef5fd5817.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Вход в замок',
+                'path' => '48b0852f264ae4769936118d1f9f3650.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Ночной вход в замок',
+                'path' => '0305a0da6165fd94e7f297b28a9e08b8.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Вход в замок',
+                'path' => '925f09b7b23ce051698b66497f9d8ca2.jpg',
+                'source_id' => 21
+            ],
+            [
+                'name' => 'Крепость у побережья',
+                'path' => 'e5761b447d94cec7a0c56e1ad2e8e460.jpg',
+                'source_id' => 21
             ],
             [
                 'name' => 'Городские ворота',
                 'path' => 'GlBLZ2Hs_fifPwGI7mcp3ZIFwO6FE7hQaXBK-qZP22ysqbj6TuWxgNjHAi-oPii9JExolPAwivQ0RT0pA0qtHjPt.jpg',
-                'source_id' => 2
+                'source_id' => 21
             ],
             [
-                'name' => 'Побережье',
-                'path' => 'GLVhtFidyecg9G0h4RGkhKPpN1CvObKKvnrLSn_1rSslBfl9TNwOOfi-RfKblhImSZdmuIS-X54FxDT5N2aqQez2.jpg',
-                'source_id' => 2
+                'name' => 'Палатки цырка',
+                'path' => '6bca4f253b08746470d3aa1b0b39c022.jpg',
+                'source_id' => 22
             ],
             [
-                'name' => 'Лесная чаща',
-                'path' => 'LwoUGUa8JOi2Pq4tylar5nb_YJluOCXSuOm6EjTlxC42oWlUS8rLcy-icm5qWU9C-xo0qmuDkLVUz6f5MriSHgB1.jpg',
-                'source_id' => 2
+                'name' => 'Место казни',
+                'path' => '65f3534372f871267291dbcb725d013d.jpg',
+                'source_id' => 22
             ],
             [
-                'name' => 'Побережье с кораблем',
-                'path' => 'vA9hIVogWpiZeR3QyS0hQmboUjLvtHZVBt0Di0hREpmvpcuA0uFLPc2XcbXux71ERjWzeGyrn0u9w6VhRqtXwX8i.jpg',
-                'source_id' => 2
+                'name' => 'Городская дорога',
+                'path' => '79e8c752957ab27dc3f14b95f8e8efff.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Турнирное поле',
+                'path' => '92ffcfc7c642c577317fabfa40d6d193.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Поселок',
+                'path' => '00229f91579067f867eada846daf3944.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Палатки цырка',
+                'path' => '6bca4f253b08746470d3aa1b0b39c022.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Городской мост',
+                'path' => '42763037c82a5d79affdcdd31d5f8b6f.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Лагерь',
+                'path' => 'b6807bdf0ec496b25c5eabbca0343e63.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Лагерь',
+                'path' => 'db79c59e9346347d4b57c2bc4e06cf18.jpg',
+                'source_id' => 22
+            ],
+            [
+                'name' => 'Порт',
+                'path' => 'ff9f8d0e690f7aedd23112cd71d7444a.jpg',
+                'source_id' => 22
             ],
         ];
+
         $objects = [
             [
                 'name' => 'Коробка с гоблинами',
                 'path' => 'object1.png',
-                'source_id' => 6
+                'source_id' => 23
             ]
         ];
 
@@ -1113,6 +1450,10 @@ class DatabaseSeeder extends Seeder
         }
         ;
         foreach ($bestiary9 as $entity) {
+            DB::table('entities')->insert($entity);
+        }
+        ;
+        foreach ($bestiary11 as $entity) {
             DB::table('entities')->insert($entity);
         }
         ;
