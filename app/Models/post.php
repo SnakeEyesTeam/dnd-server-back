@@ -23,4 +23,14 @@ class Post extends Model
     {
         return $this->belongsTo(departament::class, "departament_id");
     }
+
+    public function _likes()
+    {
+        return $this->belongsToMany(
+            Like::class,
+            'likes',
+            'user_id',
+            'post_id',
+        );
+    }
 }

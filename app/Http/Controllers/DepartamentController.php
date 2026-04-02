@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departament;
+use App\Models\Like;
 use App\Models\post;
 use Illuminate\Http\Request;
 use Validator;
@@ -17,6 +18,7 @@ class DepartamentController extends Controller
                 $post->toArray(),
                 ['user' => $post->user],
                 ['department' => $post->department->name],
+                ['likes' => Like::where('post_id', $post->id)->count()]
             )
         );
     }
@@ -34,7 +36,8 @@ class DepartamentController extends Controller
                 [
                     'fixed' => array_merge(
                         $post->toArray(),
-                        ['user' => $post->user]
+                        ['user' => $post->user],
+                        ['likes' => Like::where('post_id', $post->id)->count()]
                     )
                 ],
             );
@@ -81,6 +84,7 @@ class DepartamentController extends Controller
                 $post->toArray(),
                 ['user' => ['name' => $post->user->name]],
                 ['department' => $post->department->name],
+                ['likes' => Like::where('post_id', $post->id)->count()]
             );
         }
 
