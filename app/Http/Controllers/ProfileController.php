@@ -113,7 +113,7 @@ class ProfileController extends Controller
         }
 
         if (isTimeExceeded($request->token)) {
-            $userId = User::where('resetToken', $request->token)->first();
+            $userId = User::where('resetToken', $request->token)->first()->id;
             User::where('id', $userId)->update(
                 [
                     'password' => Hash::make($request->password),
