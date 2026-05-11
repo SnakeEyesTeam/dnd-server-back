@@ -40,8 +40,9 @@ class EntityController extends Controller
         ]);
         $idInBestiary = Str::random(16);
         if ($request->hasFile('img')) {
-            $imageName = Str::random(32) . "." . $request->img->getClientOriginalExtension();
-            Storage::disk('public')->put($imageName, file_get_contents($request->img));
+            $imageName = Str::random(32);
+            Storage::disk('public')->put($imageName . "." . $request->img->getClientOriginalExtension(), file_get_contents($request->img));
+            Storage::disk('public')->put($imageName . "original." . $request->img->getClientOriginalExtension(), file_get_contents($request->img));
         }
 
         $entity = Entity::create(
