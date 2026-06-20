@@ -41,14 +41,15 @@ class EntityController extends Controller
         $idInBestiary = Str::random(16);
         if ($request->hasFile('img')) {
             $imageName = Str::random(32);
-            Storage::disk('public')->put($imageName . "." . $request->img->getClientOriginalExtension(), file_get_contents($request->img));
-            Storage::disk('public')->put($imageName . "original." . $request->img->getClientOriginalExtension(), file_get_contents($request->img));
+            $extention = $request->img->getClientOriginalExtension();
+            Storage::disk('public')->put($imageName . "." . $extention, file_get_contents($request->img));
+            Storage::disk('public')->put($imageName . "original." . $extention, file_get_contents($request->originalImg));
         }
 
         $entity = Entity::create(
             array_merge(
                 $validated,
-                ['path' => $imageName],
+                ['path' => $imageName . "." . $extention],
                 ['idInBestiary' => $idInBestiary],
                 ['source_id' => 1],
                 ['user_id' => auth()->user()->id]
